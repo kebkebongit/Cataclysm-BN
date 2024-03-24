@@ -880,6 +880,13 @@
   },
   {
     "type": "keybinding",
+    "id": "SET_SPECIAL_ARGS",
+    "category": "OVERMAP",
+    "name": "Set Overmap Special Arguments",
+    "bindings": [ { "input_method": "keyboard", "key": "a" } ]
+  },
+  {
+    "type": "keybinding",
     "name": "View Missions",
     "category": "OVERMAP",
     "id": "MISSIONS",
@@ -2009,6 +2016,13 @@
   },
   {
     "type": "keybinding",
+    "name": "Open Wiki",
+    "category": "DEFAULTMODE",
+    "id": "open_wiki",
+    "bindings": [ { "input_method": "keyboard", "key": "w" } ]
+  },
+  {
+    "type": "keybinding",
     "name": "View Help",
     "category": "DEFAULTMODE",
     "id": "help",
@@ -2037,6 +2051,18 @@
     "name": "Debug Menu",
     "category": "DEFAULTMODE",
     "id": "debug"
+  },
+  {
+    "type": "keybinding",
+    "name": "Lua Console",
+    "category": "DEFAULTMODE",
+    "id": "lua_console"
+  },
+  {
+    "type": "keybinding",
+    "name": "Reload Lua Code",
+    "category": "DEFAULTMODE",
+    "id": "lua_reload"
   },
   {
     "type": "keybinding",
@@ -3265,5 +3291,61 @@
     "name": "Add new page",
     "category": "DIARY",
     "bindings": [ { "input_method": "keyboard", "key": "n" } ]
+  },
+  {
+    "type": "keybinding",
+    "id": "EDIT",
+    "name": "Edit command",
+    "category": "LUA_CONSOLE",
+    "bindings": [ { "input_method": "keyboard", "key": "RETURN" } ]
+  },
+  {
+    "type": "keybinding",
+    "name": "Reload Lua Code",
+    "category": "LUA_CONSOLE",
+    "id": "RELOAD",
+    "bindings": [ { "input_method": "keyboard", "key": "F4" } ]
+  },
+  {
+    "type": "keybinding",
+    "id": "HISTORY_UP",
+    "name": "History up",
+    "category": "LUA_CONSOLE",
+    "bindings": [ { "input_method": "keyboard", "key": "UP" } ]
+  },
+  {
+    "type": "keybinding",
+    "id": "HISTORY_DOWN",
+    "name": "History down",
+    "category": "LUA_CONSOLE",
+    "bindings": [ { "input_method": "keyboard", "key": "DOWN" } ]
+  },
+  {
+    "type": "keybinding",
+    "id": "SCROLL_UP",
+    "name": "Scroll up",
+    "category": "LUA_CONSOLE",
+    "bindings": [ { "input_method": "keyboard", "key": "PPAGE" } ]
+  },
+  {
+    "type": "keybinding",
+    "id": "SCROLL_DOWN",
+    "name": "Scroll down",
+    "category": "LUA_CONSOLE",
+    "bindings": [ { "input_method": "keyboard", "key": "NPAGE" } ]
+  },
+  {
+    "type": "keybinding",
+    "id": "SCROLL_TOP",
+    "name": "Scroll to the top",
+    "category": "LUA_CONSOLE",
+    "bindings": [ { "input_method": "keyboard", "key": "HOME" } ]
+  },
+  {
+    "type": "keybinding",
+    "id": "SCROLL_BOTTOM",
+    "name": "Scroll to the bottom",
+    "category": "LUA_CONSOLE",
+    "bindings": [ { "input_method": "keyboard", "key": "END" } ]
   }
 ]

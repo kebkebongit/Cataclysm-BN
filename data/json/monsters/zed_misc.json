@@ -482,7 +482,7 @@
   {
     "id": "mon_zombie_hunter",
     "type": "MONSTER",
-    "name": { "str": "feral hunter" },
+    "name": { "str": "zombie hunter" },
     "description": "This once-human body is barely recognizable, scrambling about on all fours, its nails and teeth both sharpened into dangerous looking spikes.",
     "default_faction": "zombie",
     "bodytype": "human",
@@ -661,7 +661,8 @@
       "PATH_AVOID_DANGER_2",
       "PRIORITIZE_TARGETS",
       "FILTHY",
-      "NO_FUNG_DMG"
+      "NO_FUNG_DMG",
+      "BIOPROOF"
     ]
   },
   {
@@ -709,13 +710,14 @@
       "PATH_AVOID_DANGER_1",
       "PRIORITIZE_TARGETS",
       "FILTHY",
-      "NO_FUNG_DMG"
+      "NO_FUNG_DMG",
+      "BIOPROOF"
     ]
   },
   {
     "id": "mon_zombie_runner",
     "type": "MONSTER",
-    "name": { "str": "feral runner" },
+    "name": { "str": "zombie runner" },
     "description": "This recently-risen body moves quickly, darting its head back and forth and gnawing at its hands.",
     "default_faction": "zombie",
     "bodytype": "human",
@@ -754,7 +756,7 @@
   {
     "id": "mon_zombie_predator",
     "type": "MONSTER",
-    "name": { "str": "feral predator" },
+    "name": { "str": "zombie predator" },
     "description": "With its joints in odd places and angles, this humanoid creature prowls across the landscape with surprising speed.  Its teeth and arms are sharpened into fine points, and black ooze seeps out from cuts between its muscles.",
     "default_faction": "zombie",
     "bodytype": "human",
@@ -1166,7 +1168,7 @@
     "armor_bullet": 2,
     "vision_day": 15,
     "vision_night": 2,
-    "harvest": "zombie",
+    "harvest": "zombie_maybe_tech_bionics",
     "special_attacks": [ { "type": "bite", "cooldown": 20 } ],
     "death_drops": "mon_zombie_miner_death_drops",
     "flags": [ "SEES", "HEARS", "SMELLS", "WARM", "BASHES", "GROUP_BASH", "POISON", "NO_BREATHE", "REVIVES", "FILTHY" ]

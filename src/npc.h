@@ -24,12 +24,12 @@
 #include "creature.h"
 #include "cursesdef.h"
 #include "enums.h"
+#include "enum_traits.h"
 #include "faction.h"
 #include "game_constants.h"
 #include "int_id.h"
 #include "inventory.h"
 #include "item.h"
-#include "item_location.h"
 #include "line.h"
 #include "lru_cache.h"
 #include "pimpl.h"
@@ -104,6 +104,11 @@ enum npc_attitude : int {
 std::string npc_attitude_id( npc_attitude );
 std::string npc_attitude_name( npc_attitude );
 
+template<>
+struct enum_traits<npc_attitude> {
+    static constexpr npc_attitude last = NPCATT_END;
+};
+
 // Attitudes are grouped by overall behavior towards player
 enum class attitude_group : int {
     neutral = 0, // Doesn't particularly mind the player
@@ -166,11 +171,16 @@ std::string npc_class_name_str( const npc_class_id & );
 
 enum npc_action : int;
 
-enum npc_need {
+enum npc_need : int {
     need_none,
     need_ammo, need_weapon, need_gun,
     need_food, need_drink, need_safety,
     num_needs
+};
+
+template<>
+struct enum_traits<npc_need> {
+    static constexpr npc_need last = num_needs;
 };
 
 // TODO: Turn the personality struct into a vector/map?
@@ -526,6 +536,11 @@ struct npc_short_term_cache {
     lru_cache<tripoint, int> searched_tiles;
 };
 
+struct npc_need_goal_cache {
+    tripoint_abs_omt goal;
+    tripoint_abs_omt omt_loc;
+};
+
 // DO NOT USE! This is old, use strings as talk topic instead, e.g. "TALK_AGREE_FOLLOW" instead of
 // TALK_AGREE_FOLLOW. There is also convert_talk_topic which can convert the enumeration values to
 // the new string values (used to load old saves).
@@ -746,9 +761,9 @@ class npc : public player
 
         npc();
         npc( const npc & ) = delete;
-        npc( npc && );
+        npc( npc && ) = delete;
         npc &operator=( const npc & ) = delete;
-        npc &operator=( npc && );
+        npc &operator=( npc && ) = delete;
         ~npc() override;
 
         bool is_player() const override {
@@ -897,14 +912,15 @@ class npc : public player
         void update_worst_item_value();
         int value( const item &it ) const;
         int value( const item &it, int market_price ) const;
-        bool wear_if_wanted( const item &it, std::string &reason );
-        void start_read( item_location loc, player *pl );
-        void finish_read( item_location loc );
+        detached_ptr<item> wear_if_wanted( detached_ptr<item> &&it, std::string &reason );
+        void start_read( item &it, player *pl );
+        void finish_read( item *it );
         bool can_read( const item &book, std::vector<std::string> &fail_reasons );
         int time_to_read( const item &book, const player &reader ) const;
         void do_npc_read();
-        void stow_item( item &it );
+        void stow_weapon( );
         bool wield( item &it ) override;
+        detached_ptr<item> wield( detached_ptr<item> &&target ) override;
         void drop( const drop_locations &what, const tripoint &target,
                    bool stash ) override;
         bool adjust_worn();
@@ -985,8 +1001,10 @@ class npc : public player
         // in bionics.cpp
         // can't use bionics::activate because it calls plfire directly
         void discharge_cbm_weapon();
-        // check if an NPC has a bionic weapon and activate it if possible
+        // check if an NPC has activated bionic weapons and queue them for use if applicable
         void check_or_use_weapon_cbm();
+        // check if an NPC has toggled bionic weapon and return a map to compare
+        std::map<item *, bionic_id> check_toggle_cbm();
 
         // complain about a specific issue if enough time has passed
         // @param issue string identifier of the issue
@@ -1043,7 +1061,7 @@ class npc : public player
         npc_action address_player();
         npc_action long_term_goal_action();
         // Returns true if did something and we should end turn
-        bool scan_new_items();
+        void scan_new_items();
         // Returns true if did wield it
         bool wield_better_weapon();
 
@@ -1064,13 +1082,13 @@ class npc : public player
         /* Checks and reloads any possible CBM toggled weapons.*/
         void check_or_reload_cbm();
         /** Finds ammo the NPC could use to reload a given object */
-        item_location find_usable_ammo( const item &weap );
-        item_location find_usable_ammo( const item &weap ) const;
+        item *find_usable_ammo( item &weap );
+        item *find_usable_ammo( item &weap ) const;
 
-        bool dispose_item( item_location &&obj, const std::string &prompt = std::string() ) override;
+        bool dispose_item( item &obj, const std::string &prompt = std::string() ) override;
 
         void aim();
-        void do_reload( const item &it );
+        void do_reload( item &it );
 
         // Physical movement from one tile to the next
         /**
@@ -1118,8 +1136,8 @@ class npc : public player
         // Drop wgt and vol, including all items with less value than min_val
         void drop_items( units::mass drop_weight, units::volume drop_volume, int min_val = 0 );
         /** Picks up items and returns a list of them. */
-        std::list<item> pick_up_item_map( const tripoint &where );
-        std::list<item> pick_up_item_vehicle( vehicle &veh, int part_index );
+        std::vector<item *> pick_up_item_map( const tripoint &where );
+        std::vector<item *> pick_up_item_vehicle( vehicle &veh, int part_index );
 
         bool has_item_whitelist() const;
         bool item_name_whitelisted( const std::string &to_match );
@@ -1137,7 +1155,7 @@ class npc : public player
         bool alt_attack();
         void heal_player( player &patient );
         void heal_self();
-        void pretend_heal( player &patient, item used ); // healing action of hallucinations
+        void pretend_heal( player &patient, item &used ); // healing action of hallucinations
         void mug_player( Character &mark );
         void look_for_player( const Character &sought );
         // Do we have an idea of where u are?
@@ -1232,6 +1250,8 @@ class npc : public player
         std::map<std::string, time_point> complaints;
 
         npc_short_term_cache ai_cache;
+
+        std::map<npc_need, npc_need_goal_cache> goal_cache;
     public:
         /**
          * Global position, expressed in map square coordinate system
@@ -1284,7 +1304,7 @@ class npc : public player
         time_point companion_mission_time; //When you left for ongoing/repeating missions
         time_point
         companion_mission_time_ret; //When you are expected to return for calculated/variable mission returns
-        inventory companion_mission_inv; //Inventory that is added and dropped on mission
+        location_inventory companion_mission_inv; //Inventory that is added and dropped on mission
         npc_mission mission;
         npc_mission previous_mission = NPC_MISSION_NULL;
         npc_personality personality;
@@ -1340,11 +1360,11 @@ class npc : public player
         // index for chosen activated cbm weapon;
         bionic_id cbm_active = bionic_id::NULL_ID();
         // REALLY fake item temporarily created to prevent segfaults;
-        item cbm_fake_active = null_item_reference();
+        location_ptr<item, false> cbm_fake_active;
         // index for chosen toggled cbm weapon;
         bionic_id cbm_toggled = bionic_id::NULL_ID();
         // Copy of toggled CBM weapon for comparisons;
-        item cbm_fake_toggled = null_item_reference();
+        location_ptr<item, false> cbm_fake_toggled;
 
         bool dead = false;  // If true, we need to be cleaned up
 
@@ -1372,7 +1392,7 @@ class npc_template
     public:
         npc_template() = default;
 
-        npc guy;
+        std::unique_ptr<npc> guy;
         translation name_unique;
         translation name_suffix;
         enum class gender {
@@ -1394,12 +1414,15 @@ npc *pick_follower();
 
 namespace npc_ai
 {
-/** Evaluate wielded weapon */
-double wielded_value( const Character &who, bool ideal );
+/** Evaluate wielded weapon's ideal value */
+double wielded_value( const Character &who );
 /** Evaluate item as weapon (melee or gun) */
 double weapon_value( const Character &who, const item &weap, int ammo );
 /** Evaluates item as a gun */
 double gun_value( const Character &who, const item &weap, int ammo );
+/** Chooses best gun_mode for range */
+std::pair<gun_mode_id, std::optional<gun_mode>> best_mode_for_range(
+            const Character &who, const item &firing, int dist );
 /** Evaluate item as a melee weapon */
 double melee_value( const Character &who, const item &weap );
 /** Evaluate unarmed melee value */
@@ -1410,6 +1433,14 @@ double unarmed_value( const Character &who );
 // disable toggled weapon cbms
 void deactivate_weapon_cbm( npc &who );
 // returns list of reloadable cbms.
-std::vector<std::pair<bionic_id, item>> find_reloadable_cbms( npc &who );
+std::vector<std::pair<bionic_id, item *>> find_reloadable_cbms( npc &who );
+
+namespace npc_overmap
+{
+/** Radius of the area in which we count NPCs for random spawn chance. */
+static constexpr int density_search_radius = 120;
+/** Chance that a random NPC spawns somewhere on overmap. */
+double spawn_chance_in_hour( int current_npc_count, double density );
+} // namespace npc_overmap
 
 #endif // CATA_SRC_NPC_H

@@ -20,13 +20,14 @@
   {
     "id": "string_6",
     "type": "GENERIC",
+    "stackable": true,
     "category": "spare_parts",
     "name": { "str": "short string" },
     "description": "A 6-inch (or about 15 cm) long piece of cotton string.",
     "weight": "6 g",
     "volume": "10 ml",
-    "price": 10,
-    "price_postapoc": 10,
+    "price": "10 cent",
+    "price_postapoc": "10 cent",
     "material": "cotton",
     "symbol": ",",
     "color": "light_gray",
@@ -117,6 +118,7 @@
     "healthy": -20,
     "volume": "1 L",
     "stack_size": 10,
-    "weight": "80 g"
+    "weight": "80 g",
+    "flags": [ "NO_SALVAGE" ]
   }
 ]

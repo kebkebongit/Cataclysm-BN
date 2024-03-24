@@ -10,7 +10,7 @@
     "id": "WBLOCK_1",
     "name": "Block",
     "dummy": true,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.0 } ],
+    "mult_bonuses": [ { "stat": "movecost", "scale": 0 } ],
     "messages": [ "You block %s", "<npcname> blocks %s" ],
     "description": "Medium blocking ability"
   },
@@ -19,7 +19,7 @@
     "id": "WBLOCK_2",
     "name": "Parry",
     "dummy": true,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.0 } ],
+    "mult_bonuses": [ { "stat": "movecost", "scale": 0 } ],
     "messages": [ "You parry %s", "<npcname> parries %s" ],
     "description": "High blocking ability"
   },
@@ -28,7 +28,7 @@
     "id": "WBLOCK_3",
     "name": "Shield",
     "dummy": true,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.0 } ],
+    "mult_bonuses": [ { "stat": "movecost", "scale": 0 } ],
     "messages": [ "You shield against %s", "<npcname> shields against %s" ],
     "description": "Very high blocking ability"
   },
@@ -164,7 +164,7 @@
     "unarmed_allowed": true,
     "block_counter": true,
     "crit_ok": true,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.0 } ],
+    "mult_bonuses": [ { "stat": "movecost", "scale": 0 } ],
     "messages": [ "You counter-attack %s", "<npcname> counter-attacks %s" ]
   },
   {
@@ -211,7 +211,7 @@
     "disarms": true,
     "down_dur": 1,
     "knockback_dist": 1,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.0 } ]
+    "mult_bonuses": [ { "stat": "movecost", "scale": 0 } ]
   },
   {
     "type": "technique",
@@ -225,7 +225,7 @@
     "crit_ok": true,
     "down_dur": 1,
     "knockback_dist": 1,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.0 } ]
+    "mult_bonuses": [ { "stat": "movecost", "scale": 0 } ]
   },
   {
     "type": "technique",
@@ -240,7 +240,7 @@
     "crit_ok": true,
     "down_dur": 1,
     "knockback_dist": 1,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.0 } ]
+    "mult_bonuses": [ { "stat": "movecost", "scale": 0 } ]
   },
   {
     "type": "technique",
@@ -256,7 +256,7 @@
     "disarms": true,
     "down_dur": 1,
     "knockback_dist": 1,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.0 } ]
+    "mult_bonuses": [ { "stat": "movecost", "scale": 0 } ]
   },
   {
     "type": "technique",
@@ -309,7 +309,11 @@
     "name": "Cross",
     "messages": [ "You throw a heavy cross at %s", "<npcname> throws a cross at %s" ],
     "unarmed_allowed": true,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.2 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.2 },
+      { "stat": "damage", "type": "cut", "scale": 1.2 },
+      { "stat": "damage", "type": "stab", "scale": 1.2 }
+    ]
   },
   {
     "type": "technique",
@@ -324,7 +328,12 @@
     "knockback_spread": 1,
     "stun_dur": 1,
     "down_dur": 1,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.0 }, { "stat": "damage", "type": "bash", "scale": 1.25 } ]
+    "mult_bonuses": [
+      { "stat": "movecost", "scale": 0 },
+      { "stat": "damage", "type": "bash", "scale": 1.25 },
+      { "stat": "damage", "type": "cut", "scale": 1.25 },
+      { "stat": "damage", "type": "stab", "scale": 1.25 }
+    ]
   },
   {
     "type": "technique",
@@ -349,7 +358,11 @@
     "unarmed_allowed": true,
     "crit_tec": true,
     "stun_dur": 1,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.4 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.4 },
+      { "stat": "damage", "type": "cut", "scale": 1.4 },
+      { "stat": "damage", "type": "stab", "scale": 1.4 }
+    ]
   },
   {
     "type": "technique",
@@ -380,7 +393,7 @@
     "melee_allowed": true,
     "block_counter": true,
     "crit_ok": true,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.0 } ]
+    "mult_bonuses": [ { "stat": "movecost", "scale": 0 } ]
   },
   {
     "type": "technique",
@@ -391,7 +404,7 @@
     "unarmed_allowed": true,
     "block_counter": true,
     "crit_ok": true,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.0 } ]
+    "mult_bonuses": [ { "stat": "movecost", "scale": 0 } ]
   },
   {
     "type": "technique",
@@ -467,7 +480,11 @@
     "name": "Push Kick",
     "messages": [ "You push kick %s", "<npcname> push kicks %s" ],
     "unarmed_allowed": true,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.2 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.2 },
+      { "stat": "damage", "type": "cut", "scale": 1.2 },
+      { "stat": "damage", "type": "stab", "scale": 1.2 }
+    ]
   },
   {
     "type": "technique",
@@ -477,7 +494,11 @@
     "skill_requirements": [ { "name": "unarmed", "level": 4 } ],
     "unarmed_allowed": true,
     "crit_tec": true,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.4 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.4 },
+      { "stat": "damage", "type": "cut", "scale": 1.4 },
+      { "stat": "damage", "type": "stab", "scale": 1.4 }
+    ]
   },
   {
     "type": "technique",
@@ -502,7 +523,12 @@
     "weighting": 2,
     "crit_tec": true,
     "stun_dur": 1,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.75 }, { "stat": "damage", "type": "bash", "scale": 1.4 } ]
+    "mult_bonuses": [
+      { "stat": "movecost", "scale": 0.75 },
+      { "stat": "damage", "type": "bash", "scale": 1.4 },
+      { "stat": "damage", "type": "cut", "scale": 1.4 },
+      { "stat": "damage", "type": "stab", "scale": 1.4 }
+    ]
   },
   {
     "type": "technique",
@@ -535,7 +561,7 @@
     "unarmed_allowed": true,
     "dodge_counter": true,
     "down_dur": 1,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.0 } ]
+    "mult_bonuses": [ { "stat": "movecost", "scale": 0 } ]
   },
   {
     "type": "technique",
@@ -570,7 +596,7 @@
     "block_counter": true,
     "down_dur": 1,
     "mult_bonuses": [
-      { "stat": "movecost", "scale": 0.0 },
+      { "stat": "movecost", "scale": 0 },
       { "stat": "damage", "type": "bash", "scale": 0.5 },
       { "stat": "damage", "type": "cut", "scale": 0.5 },
       { "stat": "damage", "type": "stab", "scale": 0.5 }
@@ -587,7 +613,7 @@
     "dodge_counter": true,
     "stun_dur": 1,
     "mult_bonuses": [
-      { "stat": "movecost", "scale": 0.0 },
+      { "stat": "movecost", "scale": 0 },
       { "stat": "damage", "type": "bash", "scale": 0.5 },
       { "stat": "damage", "type": "cut", "scale": 0.5 },
       { "stat": "damage", "type": "stab", "scale": 0.5 }
@@ -603,7 +629,11 @@
     "crit_tec": true,
     "stunned_target": true,
     "down_dur": 2,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.5 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.5 },
+      { "stat": "damage", "type": "cut", "scale": 1.5 },
+      { "stat": "damage", "type": "stab", "scale": 1.5 }
+    ]
   },
   {
     "type": "technique",
@@ -615,7 +645,11 @@
     "crit_tec": true,
     "downed_target": true,
     "stun_dur": 1,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 2.0 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 2 },
+      { "stat": "damage", "type": "cut", "scale": 2 },
+      { "stat": "damage", "type": "stab", "scale": 2 }
+    ]
   },
   {
     "type": "technique",
@@ -672,8 +706,8 @@
     "mult_bonuses": [
       { "stat": "movecost", "scale": 0.6 },
       { "stat": "damage", "type": "bash", "scale": 0.7 },
-      { "stat": "damage", "type": "cut", "scale": 0.0 },
-      { "stat": "damage", "type": "stab", "scale": 0.0 }
+      { "stat": "damage", "type": "cut", "scale": 0 },
+      { "stat": "damage", "type": "stab", "scale": 0 }
     ]
   },
   {
@@ -733,7 +767,7 @@
     "crit_ok": true,
     "stun_dur": 1,
     "mult_bonuses": [
-      { "stat": "movecost", "scale": 0.0 },
+      { "stat": "movecost", "scale": 0 },
       { "stat": "damage", "type": "bash", "scale": 1.2 },
       { "stat": "damage", "type": "cut", "scale": 1.2 },
       { "stat": "damage", "type": "stab", "scale": 1.2 }
@@ -750,7 +784,7 @@
     "crit_ok": true,
     "down_dur": 2,
     "mult_bonuses": [
-      { "stat": "movecost", "scale": 0.0 },
+      { "stat": "movecost", "scale": 0 },
       { "stat": "damage", "type": "bash", "scale": 0.5 },
       { "stat": "damage", "type": "cut", "scale": 0.5 },
       { "stat": "damage", "type": "stab", "scale": 0.5 }
@@ -832,7 +866,11 @@
     "melee_allowed": true,
     "unarmed_weapons_allowed": false,
     "down_dur": 1,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.25 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.25 },
+      { "stat": "damage", "type": "cut", "scale": 1.25 },
+      { "stat": "damage", "type": "stab", "scale": 1.25 }
+    ]
   },
   {
     "type": "technique",
@@ -845,7 +883,11 @@
     "unarmed_weapons_allowed": false,
     "disarms": true,
     "down_dur": 1,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.25 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.25 },
+      { "stat": "damage", "type": "cut", "scale": 1.25 },
+      { "stat": "damage", "type": "stab", "scale": 1.25 }
+    ]
   },
   {
     "type": "technique",
@@ -860,7 +902,11 @@
     "side_switch": true,
     "down_dur": 1,
     "stun_dur": 1,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.5 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.5 },
+      { "stat": "damage", "type": "cut", "scale": 1.5 },
+      { "stat": "damage", "type": "stab", "scale": 1.5 }
+    ]
   },
   {
     "type": "technique",
@@ -887,7 +933,7 @@
     "unarmed_weapons_allowed": false,
     "dodge_counter": true,
     "down_dur": 1,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.0 } ]
+    "mult_bonuses": [ { "stat": "movecost", "scale": 0 } ]
   },
   {
     "type": "technique",
@@ -898,7 +944,7 @@
     "unarmed_allowed": true,
     "block_counter": true,
     "crit_ok": true,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.0 } ]
+    "mult_bonuses": [ { "stat": "movecost", "scale": 0 } ]
   },
   {
     "type": "technique",
@@ -909,7 +955,11 @@
     "unarmed_allowed": true,
     "crit_tec": true,
     "stun_dur": 1,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.33 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.33 },
+      { "stat": "damage", "type": "cut", "scale": 1.33 },
+      { "stat": "damage", "type": "stab", "scale": 1.33 }
+    ]
   },
   {
     "type": "technique",
@@ -931,7 +981,98 @@
     "name": "Roundhouse Kick",
     "messages": [ "You roundhouse kick %s", "<npcname> roundhouse kicks %s" ],
     "unarmed_allowed": true,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.2 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.2 },
+      { "stat": "damage", "type": "cut", "scale": 1.2 },
+      { "stat": "damage", "type": "stab", "scale": 1.2 }
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_kickboxing_rapid",
+    "name": "Jab",
+    "messages": [ "You quickly jab %s", "<npcname> quickly jabs at %s" ],
+    "skill_requirements": [ { "name": "unarmed", "level": 2 } ],
+    "unarmed_allowed": true,
+    "mult_bonuses": [
+      { "stat": "movecost", "scale": 0.5 },
+      { "stat": "damage", "type": "bash", "scale": 0.66 },
+      { "stat": "damage", "type": "cut", "scale": 0.66 },
+      { "stat": "damage", "type": "stab", "scale": 0.66 }
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_kickboxing_straight_cross",
+    "name": "Straight Cross",
+    "messages": [ "You deliver a cross punch to %s", "<npcname> delivers a cross punch to %s" ],
+    "skill_requirements": [ { "name": "unarmed", "level": 3 } ],
+    "unarmed_allowed": true,
+    "crit_tec": true
+  },
+  {
+    "type": "technique",
+    "id": "tec_kickboxing_upper",
+    "name": "Uppercut",
+    "messages": [ "You uppercut %s", "<npcname> uppercuts %s" ],
+    "skill_requirements": [ { "name": "unarmed", "level": 4 } ],
+    "unarmed_allowed": true,
+    "crit_tec": true,
+    "stun_dur": 1,
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.4 },
+      { "stat": "damage", "type": "cut", "scale": 1.4 },
+      { "stat": "damage", "type": "stab", "scale": 1.4 }
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_kickboxing_roundhouse",
+    "name": "Roundhouse Kick",
+    "messages": [ "You roundhouse kick %s", "<npcname> roundhouse kicks %s" ],
+    "unarmed_allowed": true,
+    "melee_allowed": true,
+    "crit_ok": true,
+    "weighting": -2,
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.2 },
+      { "stat": "damage", "type": "cut", "scale": 1.2 },
+      { "stat": "damage", "type": "stab", "scale": 1.2 }
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_kickboxing_sidekick",
+    "name": "Side Kick",
+    "messages": [ "You side kick %s", "<npcname> side kicks %s" ],
+    "skill_requirements": [ { "name": "unarmed", "level": 2 } ],
+    "unarmed_allowed": true,
+    "melee_allowed": true,
+    "dodge_counter": true,
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.2 },
+      { "stat": "damage", "type": "cut", "scale": 1.2 },
+      { "stat": "damage", "type": "stab", "scale": 1.2 }
+    ]
+  },
+  {
+    "type": "technique",
+    "id": "tec_kickboxing_straight_kick",
+    "name": "Straight Kick",
+    "messages": [
+      "You deliver a straight kick to %s, knocking them back",
+      "<npcname> delivers a straight kick to %s, knocking them back"
+    ],
+    "skill_requirements": [ { "name": "unarmed", "level": 3 } ],
+    "unarmed_allowed": true,
+    "crit_tec": true,
+    "knockback_dist": 1,
+    "stun_dur": 1,
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.3 },
+      { "stat": "damage", "type": "cut", "scale": 1.3 },
+      { "stat": "damage", "type": "stab", "scale": 1.3 }
+    ]
   },
   {
     "type": "technique",
@@ -983,8 +1124,16 @@
     "stunned_target": true,
     "human_target": true,
     "stun_dur": 1,
-    "flat_bonuses": [ { "stat": "arpen", "type": "bash", "scaling-stat": "str", "scale": 1.0 } ],
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 2.0 } ]
+    "flat_bonuses": [
+      { "stat": "arpen", "type": "bash", "scaling-stat": "str", "scale": 1 },
+      { "stat": "arpen", "type": "cut", "scaling-stat": "str", "scale": 1 },
+      { "stat": "arpen", "type": "stab", "scaling-stat": "str", "scale": 1 }
+    ],
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 2 },
+      { "stat": "damage", "type": "cut", "scale": 2 },
+      { "stat": "damage", "type": "stab", "scale": 2 }
+    ]
   },
   {
     "type": "technique",
@@ -1007,7 +1156,7 @@
     "unarmed_allowed": true,
     "crit_ok": true,
     "block_counter": true,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.0 } ]
+    "mult_bonuses": [ { "stat": "movecost", "scale": 0 } ]
   },
   {
     "type": "technique",
@@ -1054,7 +1203,7 @@
     "dodge_counter": true,
     "knockback_dist": 1,
     "knockback_spread": 1,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.0 } ]
+    "mult_bonuses": [ { "stat": "movecost", "scale": 0 } ]
   },
   {
     "type": "technique",
@@ -1067,7 +1216,7 @@
     "dodge_counter": true,
     "down_dur": 1,
     "mult_bonuses": [
-      { "stat": "movecost", "scale": 0.0 },
+      { "stat": "movecost", "scale": 0 },
       { "stat": "damage", "type": "cut", "scale": 0 },
       { "stat": "damage", "type": "stab", "scale": 0 }
     ]
@@ -1147,7 +1296,11 @@
     "messages": [ "You deal a powerful kick to %s", "<npcname> deals a powerful kick to %s" ],
     "unarmed_allowed": true,
     "crit_ok": true,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.3 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.3 },
+      { "stat": "damage", "type": "cut", "scale": 1.3 },
+      { "stat": "damage", "type": "stab", "scale": 1.3 }
+    ]
   },
   {
     "type": "technique",
@@ -1158,7 +1311,11 @@
     "unarmed_allowed": true,
     "crit_tec": true,
     "stun_dur": 1,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.4 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.4 },
+      { "stat": "damage", "type": "cut", "scale": 1.4 },
+      { "stat": "damage", "type": "stab", "scale": 1.4 }
+    ]
   },
   {
     "type": "technique",
@@ -1207,7 +1364,11 @@
     "crit_tec": true,
     "down_dur": 2,
     "stun_dur": 2,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 2.0 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 2 },
+      { "stat": "damage", "type": "cut", "scale": 2 },
+      { "stat": "damage", "type": "stab", "scale": 2 }
+    ]
   },
   {
     "type": "technique",
@@ -1218,8 +1379,9 @@
     "melee_allowed": true,
     "mult_bonuses": [
       { "stat": "movecost", "scale": 1.75 },
-      { "stat": "damage", "type": "bash", "scale": 2.0 },
-      { "stat": "damage", "type": "cut", "scale": 2.0 }
+      { "stat": "damage", "type": "bash", "scale": 2 },
+      { "stat": "damage", "type": "cut", "scale": 2 },
+      { "stat": "damage", "type": "stab", "scale": 2 }
     ]
   },
   {
@@ -1240,7 +1402,11 @@
     "melee_allowed": true,
     "crit_tec": true,
     "stun_dur": 1,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.5 }, { "stat": "damage", "type": "cut", "scale": 1.5 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.5 },
+      { "stat": "damage", "type": "cut", "scale": 1.5 },
+      { "stat": "damage", "type": "stab", "scale": 1.5 }
+    ]
   },
   {
     "type": "technique",
@@ -1255,7 +1421,8 @@
     "mult_bonuses": [
       { "stat": "movecost", "scale": 0.5 },
       { "stat": "damage", "type": "bash", "scale": 1.5 },
-      { "stat": "damage", "type": "cut", "scale": 1.5 }
+      { "stat": "damage", "type": "cut", "scale": 1.5 },
+      { "stat": "damage", "type": "stab", "scale": 1.5 }
     ]
   },
   {
@@ -1275,7 +1442,11 @@
     "name": "Cross",
     "messages": [ "You throw a heavy cross at %s", "<npcname> throws a cross at %s" ],
     "unarmed_allowed": true,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.2 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.2 },
+      { "stat": "damage", "type": "cut", "scale": 1.2 },
+      { "stat": "damage", "type": "stab", "scale": 1.2 }
+    ]
   },
   {
     "type": "technique",
@@ -1320,7 +1491,11 @@
     "weighting": 3,
     "disarms": true,
     "stun_dur": 1,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.25 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.25 },
+      { "stat": "damage", "type": "cut", "scale": 1.25 },
+      { "stat": "damage", "type": "stab", "scale": 1.25 }
+    ]
   },
   {
     "type": "technique",
@@ -1335,7 +1510,11 @@
     "knockback_dist": 2,
     "knockback_spread": 2,
     "stunned_target": true,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 2.0 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 2 },
+      { "stat": "damage", "type": "cut", "scale": 2 },
+      { "stat": "damage", "type": "stab", "scale": 2 }
+    ]
   },
   {
     "type": "technique",
@@ -1431,7 +1610,11 @@
     "unarmed_allowed": true,
     "crit_tec": true,
     "stun_dur": 1,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.5 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.5 },
+      { "stat": "damage", "type": "cut", "scale": 1.5 },
+      { "stat": "damage", "type": "stab", "scale": 1.5 }
+    ]
   },
   {
     "type": "technique",
@@ -1444,7 +1627,7 @@
     "crit_ok": true,
     "knockback_dist": 1,
     "mult_bonuses": [
-      { "stat": "movecost", "scale": 0.0 },
+      { "stat": "movecost", "scale": 0 },
       { "stat": "damage", "type": "bash", "scale": 0.5 },
       { "stat": "damage", "type": "cut", "scale": 0.5 },
       { "stat": "damage", "type": "stab", "scale": 0.5 }
@@ -1487,7 +1670,11 @@
     "unarmed_allowed": true,
     "weighting": 2,
     "take_weapon": true,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 0.5 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 0.5 },
+      { "stat": "damage", "type": "cut", "scale": 0.5 },
+      { "stat": "damage", "type": "stab", "scale": 0.5 }
+    ]
   },
   {
     "type": "technique",
@@ -1502,7 +1689,12 @@
     "crit_tec": true,
     "stun_dur": 2,
     "knockback_dist": 2,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 1.5 }, { "stat": "damage", "type": "bash", "scale": 1.5 } ]
+    "mult_bonuses": [
+      { "stat": "movecost", "scale": 1.5 },
+      { "stat": "damage", "type": "bash", "scale": 1.5 },
+      { "stat": "damage", "type": "cut", "scale": 1.5 },
+      { "stat": "damage", "type": "stab", "scale": 1.5 }
+    ]
   },
   {
     "type": "technique",
@@ -1528,7 +1720,11 @@
     "name": "Roundhouse Kick",
     "messages": [ "You roundhouse kick %s", "<npcname> roundhouse kicks %s" ],
     "unarmed_allowed": true,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.2 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.2 },
+      { "stat": "damage", "type": "cut", "scale": 1.2 },
+      { "stat": "damage", "type": "stab", "scale": 1.2 }
+    ]
   },
   {
     "type": "technique",
@@ -1558,7 +1754,11 @@
     "unarmed_allowed": true,
     "req_buffs": [ "buff_tai_chi_onpause" ],
     "knockback_dist": 1,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.5 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.5 },
+      { "stat": "damage", "type": "cut", "scale": 1.5 },
+      { "stat": "damage", "type": "stab", "scale": 1.5 }
+    ]
   },
   {
     "type": "technique",
@@ -1570,7 +1770,12 @@
     "block_counter": true,
     "crit_ok": true,
     "down_dur": 1,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.0 }, { "stat": "damage", "type": "bash", "scale": 1.2 } ]
+    "mult_bonuses": [
+      { "stat": "movecost", "scale": 0 },
+      { "stat": "damage", "type": "bash", "scale": 1.2 },
+      { "stat": "damage", "type": "cut", "scale": 1.2 },
+      { "stat": "damage", "type": "stab", "scale": 1.2 }
+    ]
   },
   {
     "type": "technique",
@@ -1583,7 +1788,11 @@
     "req_buffs": [ "buff_tai_chi_onpause" ],
     "knockback_dist": 1,
     "stun_dur": 1,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 2.0 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 2 },
+      { "stat": "damage", "type": "cut", "scale": 2 },
+      { "stat": "damage", "type": "stab", "scale": 2 }
+    ]
   },
   {
     "type": "technique",
@@ -1611,7 +1820,11 @@
     "name": "Straight Punch",
     "messages": [ "You deliver a vertical straight punch to %s", "<npcname> delivers a vertical straight punch to %s" ],
     "unarmed_allowed": true,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.1 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.1 },
+      { "stat": "damage", "type": "cut", "scale": 1.1 },
+      { "stat": "damage", "type": "stab", "scale": 1.1 }
+    ]
   },
   {
     "type": "technique",
@@ -1624,7 +1837,11 @@
     "weighting": 2,
     "knockback_dist": 1,
     "knockback_follow": true,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.1 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.1 },
+      { "stat": "damage", "type": "cut", "scale": 1.1 },
+      { "stat": "damage", "type": "stab", "scale": 1.1 }
+    ]
   },
   {
     "type": "technique",
@@ -1635,7 +1852,11 @@
     "unarmed_allowed": true,
     "crit_tec": true,
     "down_dur": 1,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.2 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.2 },
+      { "stat": "damage", "type": "cut", "scale": 1.2 },
+      { "stat": "damage", "type": "stab", "scale": 1.2 }
+    ]
   },
   {
     "type": "technique",
@@ -1650,7 +1871,11 @@
     "down_dur": 1,
     "knockback_dist": 1,
     "knockback_follow": true,
-    "mult_bonuses": [ { "stat": "damage", "type": "bash", "scale": 1.2 } ]
+    "mult_bonuses": [
+      { "stat": "damage", "type": "bash", "scale": 1.2 },
+      { "stat": "damage", "type": "cut", "scale": 1.2 },
+      { "stat": "damage", "type": "stab", "scale": 1.2 }
+    ]
   },
   {
     "type": "technique",
@@ -1671,7 +1896,7 @@
     "unarmed_allowed": true,
     "dodge_counter": true,
     "crit_ok": true,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.0 } ]
+    "mult_bonuses": [ { "stat": "movecost", "scale": 0 } ]
   },
   {
     "type": "technique",
@@ -1691,7 +1916,12 @@
     "unarmed_allowed": true,
     "dodge_counter": true,
     "crit_ok": true,
-    "mult_bonuses": [ { "stat": "movecost", "scale": 0.0 }, { "stat": "damage", "type": "bash", "scale": 1.25 } ]
+    "mult_bonuses": [
+      { "stat": "movecost", "scale": 0 },
+      { "stat": "damage", "type": "bash", "scale": 1.25 },
+      { "stat": "damage", "type": "cut", "scale": 1.25 },
+      { "stat": "damage", "type": "stab", "scale": 1.25 }
+    ]
   },
   {
     "type": "technique",
@@ -1712,7 +1942,7 @@
     "unarmed_weapons_allowed": false,
     "skill_requirements": [ { "name": "unarmed", "level": 3 } ],
     "mult_bonuses": [
-      { "stat": "damage", "type": "bash", "scale": 3.0 },
+      { "stat": "damage", "type": "bash", "scale": 3 },
       { "stat": "damage", "type": "bash", "scaling-stat": "str", "scale": 0.1 }
     ],
     "flat_bonuses": [ { "stat": "movecost", "scale": 100 }, { "stat": "movecost", "scaling-stat": "str", "scale": 10 } ],

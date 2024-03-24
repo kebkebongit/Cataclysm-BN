@@ -7,6 +7,7 @@
 #include <stdexcept>
 
 #include "calendar.h"
+#include "cached_item_options.h"
 #include "cata_utility.h"
 #include "catacharset.h"
 #include "color.h"
@@ -134,6 +135,11 @@ static const std::vector<debug_log_class> debug_log_classes = { {
             //~ SDL stands for Simple DirectMedia Layer, leave it as is.
             translate_marker( "Messages related to SDL, tiles, tilesets and sound." ),
             false
+        },
+        {
+            DC::Lua, "DEBUGLOG_CL_LUA", translate_marker( "Lua" ),
+            translate_marker( "Messages from Lua scripts." ),
+            true
         },
     }
 };
@@ -509,7 +515,7 @@ void options_manager::add_empty_line( const std::string &sPageIn )
 
 void options_manager::add_option_group( const std::string &page_id,
                                         const options_manager::Group &group,
-                                        std::function<void( const std::string & )> entries )
+                                        const std::function<void( const std::string & )> &entries )
 {
     if( !adding_to_group_.empty() ) {
         // Nested groups are not allowed
@@ -977,7 +983,7 @@ void options_manager::cOpt::setValue( int iSetIn )
 }
 
 //set value
-void options_manager::cOpt::setValue( std::string sSetIn )
+void options_manager::cOpt::setValue( const std::string &sSetIn )
 {
     if( sType == "string_select" ) {
         if( getItemPos( sSetIn ) != -1 ) {
@@ -1101,7 +1107,7 @@ std::vector<options_manager::id_and_option> options_manager::build_tilesets_list
     // Load from user directory
     std::vector<options_manager::id_and_option> user_tilesets = load_tilesets_from(
                 PATH_INFO::user_gfx() );
-    for( options_manager::id_and_option id : user_tilesets ) {
+    for( const options_manager::id_and_option &id : user_tilesets ) {
         if( std::find( result.begin(), result.end(), id ) == result.end() ) {
             result.emplace_back( id );
         }
@@ -1154,8 +1160,8 @@ std::vector<options_manager::id_and_option> options_manager::build_soundpacks_li
 #if defined(__ANDROID__)
 bool android_get_default_setting( const char *settings_name, bool default_value )
 {
-    JNIEnv *env = ( JNIEnv * )SDL_AndroidGetJNIEnv();
-    jobject activity = ( jobject )SDL_AndroidGetActivity();
+    JNIEnv *env = static_cast< JNIEnv *>( SDL_AndroidGetJNIEnv() );
+    jobject activity = static_cast< jobject>( SDL_AndroidGetActivity() );
     jclass clazz( env->GetObjectClass( activity ) );
     jmethodID method_id = env->GetMethodID( clazz, "getDefaultSetting", "(Ljava/lang/String;Z)Z" );
     jboolean ans = env->CallBooleanMethod( activity, method_id, env->NewStringUTF( settings_name ),
@@ -1226,6 +1232,30 @@ void options_manager::add_options_general()
          translate_marker( "Set a default character name that will be used instead of a random name on character creation." ),
          "", 30
        );
+
+    add_empty_line();
+
+    add_option_group( general, Group( "comestible_merging",
+                                      to_translation( "Merge similar comestibles" ),
+                                      to_translation( "Configure how similar items are stacked." ) ),
+    [&]( auto & page_id ) {
+        add( "MERGE_COMESTIBLES", page_id, translate_marker( "Merging Mode" ),
+        translate_marker( "Merge similar comestibles.  Legacy: default behavior.  Liquid: Merge only liquid comestibles.  All: Merge all comestibles." ), {
+            { "legacy", to_translation( "Legacy" ) },
+            { "liquid", to_translation( "Liquid" ) },
+            { "all", to_translation( "All" ) }
+        }, "all" );
+
+        add( "MERGE_COMESTIBLES_THRESHOLD", general, translate_marker( "Freshness similarity threshold" ),
+             translate_marker( "Limit maximum allowed staleness difference when merging comestibles."
+                               "  The lower the value, the more similar the items must be to merge."
+                               "  0.0: Only merge identical items."
+                               "  1.0: Merge comestibles regardless of its freshness."
+                             ),
+             0.0, 1.0, 0.25, 0.05 );
+
+        get_option( "MERGE_COMESTIBLES_THRESHOLD" ).setPrerequisites( "MERGE_COMESTIBLES", {"liquid", "all"} );
+    } );
 
     add_empty_line();
 
@@ -1352,6 +1382,12 @@ void options_manager::add_options_general()
          0, 3600, 200
        );
 
+    add( "QUERY_BEFORE_ATTACKING_NEUTRAL", general,
+         translate_marker( "Query before attacking neutral monsters" ),
+         translate_marker( "If true, you will be prompted to confirm before attacking neutral or fleeing monsters that you have yet to engage in combat with." ),
+         true
+       );
+
     add_empty_line();
 
     add( "TURN_DURATION", general, translate_marker( "Realtime turn progression" ),
@@ -1466,7 +1502,7 @@ void options_manager::add_options_interface()
         { "", translate_marker( "System language" ) },
     };
     for( const language_info &info : list_available_languages() ) {
-        lang_options.push_back( {info.id, no_translation( info.name )} );
+        lang_options.emplace_back( info.id, no_translation( info.name ) );
     }
 
     add( "USE_LANG", interface, translate_marker( "Language" ),
@@ -1827,6 +1863,11 @@ void options_manager::add_options_graphics()
 
     get_option( "ANIMATION_DELAY" ).setPrerequisite( "ANIMATIONS" );
 
+    add( "BULLETS_AS_LASERS", graphics, translate_marker( "Draw bullets as lines" ),
+         translate_marker( "If true, bullets are drawn as lines of images, and the animation lasts only one frame." ),
+         false
+       );
+
     add( "BLINK_SPEED", graphics, translate_marker( "Blinking effects speed" ),
          translate_marker( "The speed of every blinking effects in ms." ),
          100, 5000, 800
@@ -1864,18 +1905,18 @@ void options_manager::add_options_graphics()
              false, COPT_CURSES_HIDE );
 
         add( "FONT_WIDTH", page_id, translate_marker( "Font width" ),
-             translate_marker( "Set the font width. Requires restart." ),
+             translate_marker( "Set the font width.  Requires restart." ),
              8, 100, 8, COPT_CURSES_HIDE );
 
         static auto font_size_options = std::array<std::array<std::string, 3>, 8> {{
-                {"FONT_HEIGHT",         translate_marker( "Font height" ),         translate_marker( "Set the font height. Requires restart." )},
-                {"FONT_SIZE",           translate_marker( "Font size" ),           translate_marker( "Set the font size. Requires restart." )},
-                {"MAP_FONT_WIDTH",      translate_marker( "Map font width" ),      translate_marker( "Set the map font width. Requires restart." )},
-                {"MAP_FONT_HEIGHT",     translate_marker( "Map font height" ),     translate_marker( "Set the map font height. Requires restart." )},
-                {"MAP_FONT_SIZE",       translate_marker( "Map font size" ),       translate_marker( "Set the map font size. Requires restart." )},
-                {"OVERMAP_FONT_WIDTH",  translate_marker( "Overmap font width" ),  translate_marker( "Set the overmap font width. Requires restart." )},
-                {"OVERMAP_FONT_HEIGHT", translate_marker( "Overmap font height" ), translate_marker( "Set the overmap font height. Requires restart." )},
-                {"OVERMAP_FONT_SIZE",   translate_marker( "Overmap font size" ),   translate_marker( "Set the overmap font size. Requires restart." )}
+                {"FONT_HEIGHT",         translate_marker( "Font height" ),         translate_marker( "Set the font height.  Requires restart." )},
+                {"FONT_SIZE",           translate_marker( "Font size" ),           translate_marker( "Set the font size.  Requires restart." )},
+                {"MAP_FONT_WIDTH",      translate_marker( "Map font width" ),      translate_marker( "Set the map font width.  Requires restart." )},
+                {"MAP_FONT_HEIGHT",     translate_marker( "Map font height" ),     translate_marker( "Set the map font height.  Requires restart." )},
+                {"MAP_FONT_SIZE",       translate_marker( "Map font size" ),       translate_marker( "Set the map font size.  Requires restart." )},
+                {"OVERMAP_FONT_WIDTH",  translate_marker( "Overmap font width" ),  translate_marker( "Set the overmap font width.  Requires restart." )},
+                {"OVERMAP_FONT_HEIGHT", translate_marker( "Overmap font height" ), translate_marker( "Set the overmap font height.  Requires restart." )},
+                {"OVERMAP_FONT_SIZE",   translate_marker( "Overmap font size" ),   translate_marker( "Set the overmap font size.  Requires restart." )}
             }
         };
         for( auto &&[option, option_name, option_desc] : font_size_options ) {
@@ -2233,8 +2274,22 @@ void options_manager::add_options_world_default()
          0, 8, 4
        );
 
+    add( "SPECIALS_DENSITY", world_default, translate_marker( "Overmap specials density" ),
+         translate_marker( "A scaling factor that determines density of overmap specials." ),
+         0.0, 10.0, 1, 0.1
+       );
+
+    add( "SPECIALS_SPACING", world_default, translate_marker( "Overmap specials spacing" ),
+         translate_marker( "A number determing minimum distance between overmap specials.  -1 allows intersections of specials." ),
+         -1, 18, 6
+       );
+
     add( "SPAWN_DENSITY", world_default, translate_marker( "Spawn rate scaling factor" ),
          translate_marker( "A scaling factor that determines density of monster spawns." ),
+         0.0, 50.0, 1.0, 0.1
+       );
+    add( "SPAWN_ANIMAL_DENSITY", world_default, translate_marker( "Animal spawn rate scaling factor" ),
+         translate_marker( "A scaling factor that determines density of animal spawns." ),
          0.0, 50.0, 1.0, 0.1
        );
 
@@ -2305,6 +2360,11 @@ void options_manager::add_options_world_default()
          0, 1000, 100
        );
 
+    add( "GROWTH_SCALING", world_default, translate_marker( "Growth scaling" ),
+         translate_marker( "Sets the time of crop growth in percents.  '50' is two times faster than default, '200' is two times longer.  '0' automatically scales growth time to match the world's season length." ),
+         0, 1000, 0
+       );
+
     add( "ETERNAL_SEASON", world_default, translate_marker( "Eternal season" ),
          translate_marker( "Keep the initial season for ever." ),
          false
@@ -2351,13 +2411,6 @@ void options_manager::add_options_world_default()
 
     add_empty_line();
 
-    add( "ZLEVELS", world_default, translate_marker( "Z-levels" ),
-         translate_marker( "If true, enables several features related to vertical movement, such as hauling items up stairs, climbing downspouts, flying aircraft and ramps.  May cause problems if toggled mid-game." ),
-         true
-       );
-
-    add_empty_line();
-
     add( "CHARACTER_POINT_POOLS", world_default, translate_marker( "Character point pools" ),
          translate_marker( "Allowed point pools for character generation." ),
     { { "any", translate_marker( "Any" ) }, { "multi_pool", translate_marker( "Multi-pool only" ) }, { "no_freeform", translate_marker( "No freeform" ) } },
@@ -2367,12 +2420,6 @@ void options_manager::add_options_world_default()
     add( "DISABLE_LIFTING", world_default,
          translate_marker( "Disables lifting requirements for vehicle parts." ),
          translate_marker( "If true, strength checks and/or lifting qualities no longer need to be met in order to change parts." ),
-         false, COPT_ALWAYS_HIDE
-       );
-
-    add( "ELEVATED_BRIDGES", world_default,
-         translate_marker( "Generate elevated bridges." ),
-         translate_marker( "If true, bridges are generated at z+1 level, allowing boats to pass underneath." ),
          false, COPT_ALWAYS_HIDE
        );
 }
@@ -2655,7 +2702,7 @@ static void refresh_tiles( bool used_tiles_changed, bool pixel_minimap_height_ch
             //game_ui::init_ui is called when zoom is changed
             g->reset_zoom();
             g->mark_main_ui_adaptor_resize();
-            tilecontext->do_tile_loading_report( []( std::string str ) {
+            tilecontext->do_tile_loading_report( []( const std::string & str ) {
                 DebugLog( DL::Info, DC::Main ) << str;
             } );
         } catch( const std::exception &err ) {
@@ -3347,6 +3394,16 @@ void options_manager::cache_to_globals()
     fov_3d_z_range = ::get_option<int>( "FOV_3D_Z_RANGE" );
     static_z_effect = ::get_option<bool>( "STATICZEFFECT" );
     PICKUP_RANGE = ::get_option<int>( "PICKUP_RANGE" );
+
+    merge_comestible_mode = ( [] {
+        const auto opt = ::get_option<std::string>( "MERGE_COMESTIBLES" );
+        return opt == "legacy" ? merge_comestible_t::merge_legacy
+        : opt == "liquid" ? merge_comestible_t::merge_liquid
+        : merge_comestible_t::merge_all;
+    } )();
+
+    similarity_threshold = ::get_option<float>( "MERGE_COMESTIBLES_THRESHOLD" );
+
 #if defined(SDL_SOUND)
     sounds::sound_enabled = ::get_option<bool>( "SOUND_ENABLED" );
 #endif

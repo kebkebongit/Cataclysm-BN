@@ -13,6 +13,7 @@
 
 #include "cata_utility.h"
 #include "catacharset.h"
+#include "catalua.h"
 #include "char_validity_check.h"
 #include "color.h"
 #include "cursesdef.h"
@@ -86,6 +87,16 @@ void WORLD::COPY_WORLD( const WORLD *world_to_copy )
     active_mod_order = world_to_copy->active_mod_order;
 }
 
+bool WORLD::needs_lua() const
+{
+    for( const mod_id &mod : active_mod_order ) {
+        if( mod.is_valid() && mod->lua_api_version ) {
+            return true;
+        }
+    }
+    return false;
+}
+
 std::string WORLD::folder_path() const
 {
     return PATH_INFO::savedir() + world_name;
@@ -108,9 +119,9 @@ worldfactory::worldfactory()
     , mman_ui( *mman )
 {
     // prepare tab display order
-    tabs.push_back( std::bind( &worldfactory::show_worldgen_tab_modselection, this, _1, _2, _3 ) );
-    tabs.push_back( std::bind( &worldfactory::show_worldgen_tab_options, this, _1, _2, _3 ) );
-    tabs.push_back( std::bind( &worldfactory::show_worldgen_tab_confirm, this, _1, _2, _3 ) );
+    tabs.emplace_back( std::bind( &worldfactory::show_worldgen_tab_modselection, this, _1, _2, _3 ) );
+    tabs.emplace_back( std::bind( &worldfactory::show_worldgen_tab_options, this, _1, _2, _3 ) );
+    tabs.emplace_back( std::bind( &worldfactory::show_worldgen_tab_confirm, this, _1, _2, _3 ) );
 }
 
 worldfactory::~worldfactory() = default;
@@ -339,6 +350,7 @@ bool worldfactory::has_world( const std::string &name ) const
 std::vector<std::string> worldfactory::all_worldnames() const
 {
     std::vector<std::string> result;
+    result.reserve( all_worlds.size() );
     for( auto &elem : all_worlds ) {
         result.push_back( elem.first );
     }
@@ -468,7 +480,17 @@ WORLDPTR worldfactory::pick_world( bool show_prompt, bool empty_only )
             wmove( w_worlds, point( 4, static_cast<int>( i ) ) );
 
             std::string world_name = ( world_pages[selpage] )[i];
-            size_t saves_num = get_world( world_name )->world_saves.size();
+            WORLDPTR world = get_world( world_name );
+            size_t saves_num = world->world_saves.size();
+
+            std::string text = string_format( "%s (%d)", world_name, saves_num );
+            nc_color col = c_white;
+            if( world->needs_lua() && !cata::has_lua() ) {
+                col = c_light_red;
+                text += " - ";
+                //~ Marker for worlds that need Lua in game builds without Lua
+                text += _( "Needs Lua!" );
+            }
 
             if( i == sel ) {
                 wprintz( w_worlds, c_yellow, ">> " );
@@ -476,7 +498,7 @@ WORLDPTR worldfactory::pick_world( bool show_prompt, bool empty_only )
                 wprintz( w_worlds, c_yellow, "   " );
             }
 
-            wprintz( w_worlds, c_white, "%s (%lu)", world_name, saves_num );
+            wprintz( w_worlds, col, text );
         }
 
         //Draw Tabs
@@ -548,7 +570,10 @@ WORLDPTR worldfactory::pick_world( bool show_prompt, bool empty_only )
                 }
             } while( world_pages[selpage].empty() );
         } else if( action == "CONFIRM" ) {
-            return get_world( world_pages[selpage][sel] );
+            WORLDPTR world = get_world( world_pages[selpage][sel] );
+            if( !( world->needs_lua() && !cata::has_lua() ) ) {
+                return world;
+            }
         }
     }
 
@@ -576,10 +601,14 @@ void worldfactory::load_last_world_info()
         return;
     }
 
-    JsonIn jsin( *file );
-    JsonObject data = jsin.get_object();
-    last_world_name = data.get_string( "world_name" );
-    last_character_name = data.get_string( "character_name" );
+    JsonIn jsin( *file, PATH_INFO::lastworld() );
+    try {
+        JsonObject data = jsin.get_object();
+        last_world_name = data.get_string( "world_name" );
+        last_character_name = data.get_string( "character_name" );
+    } catch( const std::exception &e ) {
+        debugmsg( e.what() );
+    }
 }
 
 void worldfactory::save_last_world_info()
@@ -681,7 +710,6 @@ void worldfactory::draw_mod_list( const catacurses::window &w, int &start, size_
 
                 } else {
                     if( iNum == iActive ) {
-                        //mvwprintw( w, iNum - start + iCatSortOffset, 1, "   " );
                         if( is_active_list ) {
                             mvwprintz( w, point( 1, iNum - start ), c_yellow, ">> " );
                         } else {
@@ -695,9 +723,14 @@ void worldfactory::draw_mod_list( const catacurses::window &w, int &start, size_
                     if( mod_entry_id.is_valid() ) {
                         const MOD_INFORMATION &mod = *mod_entry_id;
                         mod_entry_name = mod.name() + mod_entry_name;
+                        if( mod.lua_api_version && !cata::has_lua() ) {
+                            mod_entry_color = c_light_red;
+                            //~ Tag for mods that use Lua in game builds without Lua.
+                            mod_entry_name = _( "(Needs Lua) " ) + remove_color_tags( mod_entry_name );
+                        }
                         if( mod.obsolete ) {
                             mod_entry_color = c_dark_gray;
-                            mod_entry_name += "*";
+                            mod_entry_name = remove_color_tags( mod_entry_name ) + "*";
                         }
                     } else {
                         mod_entry_color = c_light_red;
@@ -939,8 +972,8 @@ int worldfactory::show_modselection_window( const catacurses::window &win,
     ui.on_screen_resize( init_windows );
 
     std::vector<std::string> headers;
-    headers.push_back( _( "Mod List" ) );
-    headers.push_back( _( "Mod Load Order" ) );
+    headers.emplace_back( _( "Mod List" ) );
+    headers.emplace_back( _( "Mod Load Order" ) );
 
     size_t active_header = 0;
     int startsel[2] = {0, 0};
@@ -1671,6 +1704,17 @@ WORLDPTR worldfactory::get_world( const std::string &name )
         return nullptr;
     }
     return iter->second.get();
+}
+
+size_t worldfactory::get_world_index( const std::string &name )
+{
+    std::vector<std::string> worlds = all_worldnames();
+    size_t world_pos = std::find( worlds.begin(), worlds.end(),
+                                  name ) - worlds.begin();
+    if( world_pos >= worlds.size() ) {
+        world_pos = 0;
+    }
+    return world_pos;
 }
 
 // Helper predicate to exclude files from deletion when resetting a world directory.

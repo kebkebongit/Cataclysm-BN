@@ -149,7 +149,8 @@
       "fail_message": "You pry, but cannot lift the manhole cover.",
       "pry_quality": 1,
       "difficulty": 4,
-      "new_ter_type": "t_manhole"
+      "new_ter_type": "t_manhole",
+      "pry_items": [ { "item": "manhole_cover" } ]
     }
   },
   {
@@ -175,8 +176,8 @@
   {
     "type": "terrain",
     "id": "t_ramp_down_high",
-    "name": "road ramp down (high end)",
-    "description": "The upper end of an asphalt ramp leading down.",
+    "name": "ramp down (high end)",
+    "description": "The upper end of a ramp leading down.",
     "symbol": ">",
     "color": "dark_gray",
     "move_cost": 2,
@@ -185,8 +186,8 @@
   {
     "type": "terrain",
     "id": "t_ramp_down_low",
-    "name": "road ramp down (low end)",
-    "description": "The lower end of an asphalt ramp leading down.",
+    "name": "ramp down (low end)",
+    "description": "The lower end of a ramp leading down.",
     "symbol": ">",
     "color": "dark_gray",
     "move_cost": 2,
@@ -195,8 +196,8 @@
   {
     "type": "terrain",
     "id": "t_ramp_up_high",
-    "name": "road ramp up (high end)",
-    "description": "The upper end of an asphalt ramp leading up.",
+    "name": "ramp up (high end)",
+    "description": "The upper end of a ramp leading up.",
     "symbol": "<",
     "color": "dark_gray",
     "move_cost": 2,
@@ -205,8 +206,8 @@
   {
     "type": "terrain",
     "id": "t_ramp_up_low",
-    "name": "road ramp up (low end)",
-    "description": "The lower end of an asphalt ramp leading up.",
+    "name": "ramp up (low end)",
+    "description": "The lower end of a ramp leading up.",
     "symbol": "<",
     "color": "dark_gray",
     "move_cost": 2,
@@ -333,6 +334,7 @@
     "description": "The upper end of rail track leading down.",
     "symbol": ">",
     "color": "cyan",
+    "looks_like": "t_railroad_track",
     "move_cost": 2,
     "flags": [ "TRANSPARENT", "RAIL", "ROAD", "Z_TRANSPARENT" ]
   },
@@ -343,6 +345,7 @@
     "description": "The lower end of rail track leading down.",
     "symbol": ">",
     "color": "cyan",
+    "looks_like": "t_railroad_track",
     "move_cost": 2,
     "flags": [ "TRANSPARENT", "RAIL", "ROAD", "RAMP_DOWN", "Z_TRANSPARENT" ]
   },
@@ -353,6 +356,7 @@
     "description": "The upper end of rail track leading up.",
     "symbol": "<",
     "color": "cyan",
+    "looks_like": "t_railroad_track",
     "move_cost": 2,
     "flags": [ "RAIL", "ROAD", "RAMP_UP" ]
   },
@@ -363,6 +367,7 @@
     "description": "The lower end of rail track leading up.",
     "symbol": "<",
     "color": "cyan",
+    "looks_like": "t_railroad_track",
     "move_cost": 2,
     "flags": [ "TRANSPARENT", "RAIL", "ROAD" ]
   }

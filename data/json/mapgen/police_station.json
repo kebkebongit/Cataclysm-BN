@@ -7,7 +7,7 @@
     "object": {
       "fill_ter": "t_floor",
       "rows": [
-        "________________________",
+        "_______________________'",
         "__I_____________________",
         "________________________",
         "|www**|--ww---ww---ww--|",
@@ -20,8 +20,8 @@
         "|5.....................|",
         "|-=-|..|+-|-+|-+--|-+--|",
         "|..1|..|.S|S.|t..c|....|",
-        "|..1|..|.t|t.|...c|Ccc.|",
-        "|..1|..|+-|-+|...c|.cc.|",
+        "|a.1|..|.t|t.|...c|Ccc.|",
+        "|n.1|..|+-|-+|...c|.cc.|",
         "|lll|..|.&|&.|cccc|.C..|",
         "|----**----------------|",
         ",4,,,,,,,,,,,,,,,,,,,,,,",
@@ -37,6 +37,7 @@
         "|": "t_brick_wall",
         ".": "t_floor",
         "_": "t_sidewalk",
+        "'": "t_sidewalk",
         ",": "t_pavement",
         "B": "t_door_bar_locked",
         "*": "t_door_locked",
@@ -48,6 +49,7 @@
         "#": "t_bars"
       },
       "furniture": {
+        "'": "f_street_light",
         "c": "f_counter",
         "x": "f_counter",
         "1": "f_locker",
@@ -63,6 +65,8 @@
         "t": { "item": "trash_cart", "chance": 50 },
         "c": { "item": "kitchen", "chance": 40, "repeat": [ 2, 4 ] },
         "1": { "item": "cop_gear", "chance": 70, "repeat": [ 2, 4 ] },
+        "n": { "item": "pwr_armor", "chance": 15, "repeat": [ 2, 4 ] },
+        "a": { "item": "pwr_armor_acc", "chance": 20, "repeat": [ 2, 4 ] },
         "l": { "item": "cop_armory", "chance": 70, "repeat": [ 2, 4 ] },
         "L": { "item": "cop_evidence", "chance": 60, "repeat": [ 2, 4 ] }
       },
@@ -158,7 +162,7 @@
     "object": {
       "fill_ter": "t_floor",
       "rows": [
-        "________________________",
+        "_______________________'",
         "__I_____________________",
         "________________________",
         "|www**|--ww---ww---ww--|",
@@ -179,7 +183,7 @@
         "|L.L|<.*__,,,,,,,,,,,,,,",
         "|L.L|---|_,,,,,,,,,,,,,,",
         "|L.2FFF.|_,,,,,,,,,,,,,,",
-        "|L.....<|_,,,,,,,,,,,,,,",
+        "|L...an<|_,,,,,,,,,,,,,,",
         "|LLLLLL.|_,,,,,,,,,,,,,,",
         "--------|9,,,,,,,,,,,,,,"
       ],
@@ -188,6 +192,7 @@
         "|": "t_brick_wall",
         ".": "t_floor",
         "_": "t_sidewalk",
+        "'": "t_sidewalk",
         ",": "t_pavement",
         "B": "t_door_bar_locked",
         "*": "t_door_locked",
@@ -202,6 +207,7 @@
         "#": "t_bars"
       },
       "furniture": {
+        "'": "f_street_light",
         "c": "f_counter",
         "x": "f_counter",
         "1": "f_locker",
@@ -223,6 +229,8 @@
         "c": { "item": "kitchen", "chance": 40 },
         "1": { "item": "cop_gear", "chance": 70 },
         "l": { "item": "cop_armory", "chance": 70 },
+        "n": { "item": "pwr_armor", "chance": 10 },
+        "a": { "item": "pwr_armor_acc", "chance": 15 },
         "L": { "item": "cop_evidence", "chance": 60 },
         "N": { "item": "vending_food_items", "chance": 70, "repeat": [ 4, 12 ] },
         "U": { "item": "vending_drink_items", "chance": 70, "repeat": [ 4, 12 ] }
@@ -431,7 +439,7 @@
     "object": {
       "fill_ter": "t_floor",
       "rows": [
-        "___________________,,,,,",
+        "___________________,,,,'",
         "|-----|-w--w--w-*-|,,,,,",
         "|&+..S|p..bbb.....|,,,,,",
         "|--...+........ccc|,,,,,",
@@ -443,7 +451,7 @@
         "|.................|,,,,,",
         "|--------*------*-|,,,,,",
         "|llll|5......+$|.<|,,,,,",
-        "|....=..|----|----|%%%%^",
+        "|na..=..|----|----|%%%%^",
         "|1111|..|tccf|4_I_,,,,,^",
         "|----|..|C...|,___,,,,,^",
         "|....|..|T..Y|,,,,,,,,,^",
@@ -462,6 +470,7 @@
         ".": "t_floor",
         "_": "t_sidewalk",
         ",": "t_pavement",
+        "'": "t_pavement",
         ")": "t_pavement_y",
         "^": "t_chainfence",
         "%": "t_chaingate_o",
@@ -477,6 +486,7 @@
         "#": "t_bars"
       },
       "furniture": {
+        "'": "f_street_light",
         "c": "f_counter",
         "x": "f_counter",
         "!": "f_safe_l",
@@ -502,6 +512,8 @@
         "t": { "item": "trash_cart", "chance": 50, "repeat": [ 2, 3 ] },
         "1": { "item": "cop_gear", "chance": 70, "repeat": [ 2, 3 ] },
         "l": { "item": "cop_armory", "chance": 70, "repeat": [ 2, 3 ] },
+        "a": { "item": "pwr_armor_acc", "chance": 15, "repeat": [ 2, 4 ] },
+        "n": { "item": "pwr_armor", "chance": 10, "repeat": [ 2, 4 ] },
         "L": { "item": "cop_evidence", "chance": 60, "repeat": [ 2, 3 ] },
         "D": { "item": "office", "chance": 60, "repeat": [ 2, 3 ] },
         "T": { "item": "dining", "chance": 60, "repeat": [ 2, 3 ] },

@@ -30,6 +30,8 @@ struct vehicle_part;
 struct dealt_damage_instance;
 struct dealt_projectile_attack;
 struct damage_instance;
+template<typename T>
+class detached_ptr;
 
 namespace target_handler
 {
@@ -101,6 +103,9 @@ float str_draw_damage_modifier( const item &it, const Character &p );
 float str_draw_dispersion_modifier( const item &it, const Character &p );
 float str_draw_range_modifier( const item &it, const Character &p );
 
+/** Returns shaped attack used by the gun+ammo, if set */
+std::optional<shape_factory> get_shape_factory( const item &gun );
+
 /** AoE attack, with area given by shape */
 void execute_shaped_attack( const shape &sh, const projectile &proj, Creature &attacker );
 
@@ -122,7 +127,7 @@ void print_dmg_msg( Creature &target, Creature *source, const dealt_damage_insta
 /**
  * Prompts to select default ammo compatible with provided gun.
  */
-void prompt_select_default_ammo_for( avatar &u, const item &w );
+void prompt_select_default_ammo_for( avatar &u, item &w );
 
 /** Returns true if a gun misfires, jams, or has other problems, else returns false. */
 bool handle_gun_damage( Character &shooter, item &it );
@@ -148,7 +153,7 @@ int get_most_accurate_sight( const Character &who, const item &gun );
 double aim_speed_skill_modifier( const Character &who, const skill_id &gun_skill );
 double aim_speed_dex_modifier( const Character &who );
 double aim_speed_encumbrance_modifier( const Character &who );
-double aim_cap_from_volume( const item &gun );
+double aim_multiplier_from_volume( const item &gun );
 
 /** Calculates aim improvement per move spent aiming at a given @param recoil */
 double aim_per_move( const Character &who, const item &gun, double recoil );
@@ -162,6 +167,9 @@ double recoil_total( const Character &who );
 /** How many moves does it take to aim gun to the target accuracy. */
 int gun_engagement_moves( const Character &who, const item &gun, int target = 0,
                           int start = MAX_RECOIL );
+
+/** Calculates time taken to fire gun */
+int time_to_attack( const Character &p, const item &firing, const item *loc );
 
 void make_gun_sound_effect( const Character &who, bool burst, const item &gun );
 
@@ -183,7 +191,7 @@ int fire_gun( Character &who, const tripoint &target, int shots = 1 );
  * @return Number of shots actually fired
  */
 int fire_gun( Character &who, const tripoint &target, int shots, item &gun,
-              item_location ammo );
+              item *ammo );
 
 /**
  * Execute a throw.
@@ -191,7 +199,8 @@ int fire_gun( Character &who, const tripoint &target, int shots, item &gun,
  * @param to_throw Item being thrown
  * @param blind_throw_from_pos Position of blind throw (if blind throwing)
  */
-dealt_projectile_attack throw_item( Character &who, const tripoint &target, const item &to_throw,
+dealt_projectile_attack throw_item( Character &who, const tripoint &target,
+                                    detached_ptr<item> &&to_throw,
                                     std::optional<tripoint> blind_throw_from_pos );
 
 } // namespace ranged

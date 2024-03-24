@@ -10,7 +10,7 @@
       "d": "f_desk",
       "s": "f_dresser",
       "h": "f_chair",
-      "f": "f_fridge",
+      "ḟ": "f_fridge",
       "t": "f_table",
       "i": "f_filing_cabinet",
       "c": "f_counter",
@@ -33,7 +33,9 @@
       "W": "t_door_lab_c",
       "M": "t_door_metal_lab_c",
       "L": "t_door_metal_locked",
-      "#": "t_rock"
+      "#": "t_rock",
+      "C": "t_machinery_electronic",
+      "Y": "t_thconc_floor_olight"
     },
     "toilets": { "T": {  } }
   },

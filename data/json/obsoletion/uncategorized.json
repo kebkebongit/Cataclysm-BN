@@ -191,7 +191,7 @@
     "description": "A piece of cloth that can be used for cleaning impervious surfaces.",
     "weight": "80 g",
     "volume": "250 ml",
-    "price": 0,
+    "price": "0 cent",
     "material": "cotton",
     "symbol": ",",
     "color": "white",
@@ -222,12 +222,12 @@
     "description": "This is an expansion device for use on plutonium-powered equipment.  With enough electronics skill, you could attach this to an atomic tool to double the amount of plutonium it can hold.  Note that this device is incompatible with the atomic battery mod.",
     "weight": "694 g",
     "volume": "750 ml",
-    "price": 10000,
+    "price": "100 USD",
     "material": [ "superalloy", "plastic" ],
     "symbol": ";",
     "color": "dark_gray",
     "acceptable_ammo": [ "plutonium" ],
-    "capacity_multiplier": 2.0
+    "capacity_multiplier": 2
   },
   {
     "result": "double_plutonium_core",
@@ -268,16 +268,6 @@
   {
     "type": "recipe",
     "result": "mininuke_launcher",
-    "obsolete": true
-  },
-  {
-    "type": "recipe",
-    "result": "rebar_rifle",
-    "obsolete": true
-  },
-  {
-    "type": "recipe",
-    "result": "heavy_rail_rifle",
     "obsolete": true
   },
   {
@@ -421,5 +411,56 @@
       { "fuel": 1, "smoke": 3, "burn": 3 },
       { "fuel": 1, "smoke": 5, "burn": 5 }
     ]
+  },
+  {
+    "type": "terrain",
+    "//": "Obsoleted in favor of a furniture version.",
+    "id": "t_water_dispenser",
+    "name": "water dispenser",
+    "looks_like": "f_sink",
+    "description": "A machine with several taps that dispenses clean water.",
+    "symbol": "W",
+    "color": "light_blue",
+    "move_cost": 0,
+    "coverage": 40,
+    "flags": [ "TRANSPARENT" ],
+    "bash": {
+      "str_min": 15,
+      "str_max": 80,
+      "sound": "whack!",
+      "sound_fail": "thunk.",
+      "ter_set": "t_concrete",
+      "items": [
+        { "item": "steel_chunk", "count": [ 0, 2 ] },
+        { "item": "scrap", "count": [ 3, 6 ] },
+        { "item": "pipe", "count": [ 0, 2 ] }
+      ]
+    },
+    "examine_action": "clean_water_source"
+  },
+  {
+    "type": "trap",
+    "id": "tr_shotgun_2_1",
+    "trigger_weight": "200 g",
+    "name": "half-empty shotgun trap",
+    "color": "red",
+    "symbol": "^",
+    "visibility": 4,
+    "avoidance": 5,
+    "difficulty": 6,
+    "action": "shotgun",
+    "remove_on_trigger": true,
+    "trigger_items": [ "tripwire", "shotgun_d", { "item": "shot_hull", "quantity": 2, "charges": 1 } ],
+    "drops": [ "tripwire", "shotgun_d", { "item": "shot_00", "quantity": 1, "charges": 1 } ],
+    "vehicle_data": {
+      "chance": 70,
+      "damage": 300,
+      "sound_volume": 60,
+      "sound": "Bang!",
+      "sound_type": "fire_gun",
+      "sound_variant": "shotgun_d",
+      "remove_trap": true,
+      "spawn_items": [ "shotgun_d", "string_6" ]
+    }
   }
 ]

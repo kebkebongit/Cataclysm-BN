@@ -84,6 +84,105 @@
     ]
   },
   {
+    "result": "1cyl_combustion",
+    "type": "recipe",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_VEHICLE",
+    "skill_used": "mechanics",
+    "difficulty": 4,
+    "time": "40 m",
+    "reversible": true,
+    "book_learn": [ [ "textbook_fabrication", 5 ], [ "welding_book", 6 ], [ "textbook_carpentry", 5 ] ],
+    "qualities": [ { "id": "SCREW", "level": 1 }, { "id": "WRENCH", "level": 1 }, { "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "drivebelt", 2 ], [ "drivebelt_makeshift", 2 ] ],
+      [ [ "filter_air", 1 ], [ "filter_air_makeshift", 1 ] ],
+      [ [ "filter_liquid", 1 ], [ "filter_liquid_makeshift", 1 ] ],
+      [ [ "well_pump", 1 ] ],
+      [ [ "power_supply", 1 ] ],
+      [ [ "cable", 40 ] ],
+      [ [ "pipe", 1 ] ],
+      [ [ "engine_block_tiny", 1 ] ],
+      [ [ "metal_tank_little", 1 ] ],
+      [ [ "motor_oil", 900 ] ]
+    ]
+  },
+  {
+    "result": "v2_combustion",
+    "type": "recipe",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_VEHICLE",
+    "skill_used": "mechanics",
+    "difficulty": 4,
+    "time": "40 m",
+    "reversible": true,
+    "book_learn": [ [ "textbook_fabrication", 5 ], [ "welding_book", 6 ], [ "textbook_carpentry", 5 ] ],
+    "qualities": [ { "id": "SCREW", "level": 1 }, { "id": "WRENCH", "level": 1 }, { "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "drivebelt", 2 ], [ "drivebelt_makeshift", 2 ] ],
+      [ [ "chain", 1 ] ],
+      [ [ "filter_air", 1 ], [ "filter_air_makeshift", 1 ] ],
+      [ [ "filter_liquid", 1 ], [ "filter_liquid_makeshift", 1 ] ],
+      [ [ "motor_small", 1 ] ],
+      [ [ "well_pump", 2 ] ],
+      [ [ "power_supply", 1 ] ],
+      [ [ "cable", 30 ] ],
+      [ [ "pipe", 1 ] ],
+      [ [ "engine_block_tiny", 1 ] ],
+      [ [ "metal_tank_little", 1 ] ],
+      [ [ "motor_oil", 2200 ] ]
+    ]
+  },
+  {
+    "result": "1cyl_combustion_large",
+    "type": "recipe",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_VEHICLE",
+    "skill_used": "mechanics",
+    "difficulty": 5,
+    "time": "60 m",
+    "reversible": true,
+    "book_learn": [ [ "textbook_fabrication", 6 ], [ "welding_book", 7 ], [ "textbook_carpentry", 6 ] ],
+    "qualities": [ { "id": "SCREW", "level": 1 }, { "id": "WRENCH", "level": 1 }, { "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "drivebelt", 2 ], [ "drivebelt_makeshift", 2 ] ],
+      [ [ "filter_air", 1 ], [ "filter_air_makeshift", 1 ] ],
+      [ [ "filter_liquid", 1 ], [ "filter_liquid_makeshift", 1 ] ],
+      [ [ "well_pump", 1 ] ],
+      [ [ "power_supply", 1 ] ],
+      [ [ "cable", 40 ] ],
+      [ [ "pipe", 1 ] ],
+      [ [ "engine_block_small", 1 ] ],
+      [ [ "metal_tank_little", 1 ] ],
+      [ [ "motor_oil", 1450 ] ]
+    ]
+  },
+  {
+    "result": "i4_combustion",
+    "type": "recipe",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_VEHICLE",
+    "skill_used": "mechanics",
+    "difficulty": 5,
+    "time": "60 m",
+    "reversible": true,
+    "book_learn": [ [ "textbook_fabrication", 6 ], [ "welding_book", 7 ], [ "textbook_carpentry", 6 ] ],
+    "qualities": [ { "id": "SCREW", "level": 1 }, { "id": "WRENCH", "level": 1 }, { "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "drivebelt", 2 ], [ "drivebelt_makeshift", 2 ] ],
+      [ [ "filter_air", 1 ], [ "filter_air_makeshift", 1 ] ],
+      [ [ "filter_liquid", 1 ], [ "filter_liquid_makeshift", 1 ] ],
+      [ [ "motor_small", 1 ] ],
+      [ [ "well_pump", 2 ] ],
+      [ [ "power_supply", 1 ] ],
+      [ [ "cable", 40 ] ],
+      [ [ "pipe", 2 ] ],
+      [ [ "engine_block_small", 1 ] ],
+      [ [ "metal_tank_little", 1 ] ],
+      [ [ "motor_oil", 4700 ] ]
+    ]
+  },
+  {
     "type": "recipe",
     "result": "fuel_bunker",
     "category": "CC_OTHER",
@@ -565,9 +664,7 @@
     "difficulty": 3,
     "time": "1 h",
     "autolearn": true,
-    "using": [ [ "blacksmithing_standard", 2 ], [ "steel_tiny", 2 ] ],
-    "qualities": [ { "id": "CHISEL", "level": 3 } ],
-    "tools": [ [ [ "swage", -1 ] ] ]
+    "using": [ [ "blacksmithing_advanced", 2 ], [ "steel_tiny", 2 ] ]
   },
   {
     "type": "recipe",
@@ -607,7 +704,7 @@
       [ [ "gun_module", 1 ] ],
       [ [ "identification_module", 1 ] ],
       [ [ "cable", 10 ] ],
-      [ [ "camera", 1 ], [ "camera_pro", 1 ], [ "omnicamera", 1 ], [ "sensor_module", 1 ] ],
+      [ [ "omnicamera", 1 ], [ "camera", 1 ], [ "camera_pro", 1 ], [ "sensor_module", 1 ] ],
       [ [ "robot_controls", 1 ] ]
     ]
   },
@@ -656,6 +753,7 @@
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_VEHICLE",
     "skill_used": "fabrication",
+    "skills_required": [ "mechanics", 1 ],
     "difficulty": 1,
     "time": "8 m",
     "reversible": true,
@@ -669,6 +767,7 @@
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_VEHICLE",
     "skill_used": "fabrication",
+    "skills_required": [ "mechanics", 2 ],
     "difficulty": 2,
     "time": "9 m",
     "reversible": true,
@@ -725,12 +824,13 @@
     "subcategory": "CSC_OTHER_VEHICLE",
     "skill_used": "fabrication",
     "difficulty": 3,
+    "skills_required": [ "mechanics", 3 ],
     "time": "45 m",
     "reversible": true,
     "autolearn": true,
     "using": [ [ "steel_standard", 20 ] ],
     "qualities": [ { "id": "GLARE", "level": 2 } ],
-    "tools": [ [ [ "welder", 50 ], [ "welder_crude", 75 ], [ "toolset", 75 ], [ "oxy_torch", 10 ] ] ]
+    "tools": [ [ [ "welder", 50 ], [ "toolset", 75 ], [ "oxy_torch", 10 ] ] ]
   },
   {
     "type": "recipe",
@@ -738,13 +838,14 @@
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_VEHICLE",
     "skill_used": "fabrication",
+    "skills_required": [ "mechanics", 3 ],
     "difficulty": 3,
     "time": "90 m",
     "reversible": true,
     "autolearn": true,
     "qualities": [ { "id": "GLARE", "level": 2 } ],
     "using": [ [ "steel_standard", 100 ] ],
-    "tools": [ [ [ "welder", 50 ], [ "welder_crude", 75 ], [ "toolset", 75 ], [ "oxy_torch", 10 ] ] ]
+    "tools": [ [ [ "welder", 50 ], [ "toolset", 75 ], [ "oxy_torch", 10 ] ] ]
   },
   {
     "type": "recipe",
@@ -752,6 +853,7 @@
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_VEHICLE",
     "skill_used": "fabrication",
+    "skills_required": [ "mechanics", 4 ],
     "difficulty": 4,
     "id_suffix": "forge",
     "time": "20 m",
@@ -765,6 +867,7 @@
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_VEHICLE",
     "skill_used": "fabrication",
+    "skills_required": [ "mechanics", 4 ],
     "difficulty": 4,
     "id_suffix": "forge",
     "time": "50 m",
@@ -778,6 +881,7 @@
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_VEHICLE",
     "skill_used": "fabrication",
+    "skills_required": [ "mechanics", 1 ],
     "difficulty": 1,
     "time": "6 m",
     "reversible": true,
@@ -791,6 +895,7 @@
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_VEHICLE",
     "skill_used": "fabrication",
+    "skills_required": [ "mechanics", 0 ],
     "time": "4 m",
     "reversible": true,
     "autolearn": true,
@@ -847,9 +952,7 @@
     "reversible": true,
     "//": "sawing it down doesn't teach anything useful",
     "autolearn": true,
-    "qualities": [ { "id": "GLARE", "level": 2 } ],
-    "tools": [ [ [ "welder", 100 ], [ "welder_crude", 150 ], [ "toolset", 150 ], [ "forge", 100 ], [ "oxy_torch", 20 ] ] ],
-    "components": [ [ [ "steel_lump", 8 ] ] ]
+    "using": [ [ "welding_standard", 10 ], [ "steel_standard", 8 ] ]
   },
   {
     "type": "recipe",
@@ -861,9 +964,8 @@
     "time": "12 m",
     "reversible": true,
     "book_learn": [ [ "textbook_fabrication", 3 ], [ "welding_book", 3 ], [ "textbook_mechanics", 4 ] ],
-    "qualities": [ { "id": "GLARE", "level": 2 } ],
-    "tools": [ [ [ "welder", 100 ], [ "welder_crude", 150 ], [ "toolset", 150 ], [ "forge", 100 ], [ "oxy_torch", 20 ] ] ],
-    "components": [ [ [ "steel_lump", 8 ], [ "steel_plate", 1 ] ], [ [ "steel_chunk", 4 ], [ "scrap", 12 ], [ "spike", 4 ] ] ]
+    "using": [ [ "welding_standard", 10 ] ],
+    "components": [ [ [ "steel_standard", 8, "LIST" ], [ "steel_plate", 1 ] ], [ [ "steel_tiny", 4, "LIST" ], [ "spike", 4 ] ] ]
   },
   {
     "type": "recipe",
@@ -876,9 +978,20 @@
     "time": "12 m",
     "reversible": true,
     "book_learn": [ [ "textbook_fabrication", 5 ], [ "adv_chemistry", 6 ], [ "welding_book", 5 ] ],
-    "qualities": [ { "id": "GLARE", "level": 2 } ],
-    "tools": [ [ [ "welder", 100 ], [ "welder_crude", 150 ], [ "toolset", 150 ], [ "forge", 100 ], [ "oxy_torch", 20 ] ] ],
-    "components": [ [ [ "steel_lump", 24 ] ] ]
+    "using": [ [ "welding_standard", 10 ], [ "steel_standard", 24 ] ]
+  },
+  {
+    "type": "recipe",
+    "result": "alloy_plate",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_VEHICLE",
+    "skill_used": "fabrication",
+    "difficulty": 6,
+    "time": "12 m",
+    "reversible": true,
+    "book_learn": [ [ "textbook_fabrication", 5 ], [ "adv_chemistry", 6 ], [ "welding_book", 5 ] ],
+    "using": [ [ "welding_standard", 10 ] ],
+    "components": [ [ [ "alloy_sheet", 12 ] ] ]
   },
   {
     "result": "fridgetank",
@@ -1175,7 +1288,7 @@
     "reversible": true,
     "autolearn": true,
     "using": [ [ "sewing_standard", 50 ], [ "welding_standard", 5 ] ],
-    "components": [ [ [ "pipe", 4 ] ], [ [ "spring", 2 ] ], [ [ "leather", 12 ], [ "fur", 12 ] ], [ [ "rag", 8 ] ] ]
+    "components": [ [ [ "pipe", 4 ] ], [ [ "spring", 2 ] ], [ [ "fabric_hides_proper", 12, "LIST" ], [ "fur", 12 ] ], [ [ "rag", 8 ] ] ]
   },
   {
     "type": "recipe",
@@ -1238,8 +1351,7 @@
     "difficulty": 4,
     "time": "3 h",
     "autolearn": true,
-    "using": [ [ "blacksmithing_standard", 20 ], [ "steel_standard", 5 ] ],
-    "qualities": [ { "id": "CHISEL", "level": 3 } ],
+    "using": [ [ "blacksmithing_intermediate", 20 ], [ "steel_standard", 5 ] ],
     "tools": [ [ [ "crucible", -1 ], [ "crucible_clay", -1 ] ] ]
   },
   {
@@ -1311,5 +1423,52 @@
     "using": [ [ "welding_standard", 5 ] ],
     "qualities": [ { "id": "SAW_M", "level": 1 } ],
     "components": [ [ [ "solar_panel_v2", 1 ] ], [ [ "reinforced_glass_pane", 1 ] ], [ [ "scrap", 2 ] ], [ [ "wire", 2 ] ] ]
+  },
+  {
+    "type": "recipe",
+    "result": "homebuilt_gyrocopter_rotor",
+    "category": "CC_ELECTRONIC",
+    "subcategory": "CSC_ELECTRONIC_PARTS",
+    "skill_used": "fabrication",
+    "skills_required": [ "mechanics", 5 ],
+    "difficulty": 7,
+    "time": "1 h",
+    "book_learn": [
+      [ "textbook_fabrication", 6 ],
+      [ "welding_book", 6 ],
+      [ "textbook_carpentry", 6 ],
+      [ "book_icef", 4 ],
+      [ "textbook_mechanics", 4 ],
+      [ "manual_mechanics", 4 ]
+    ],
+    "using": [ [ "welding_standard", 10 ], [ "adhesive", 4 ] ],
+    "qualities": [
+      { "id": "SCREW", "level": 1 },
+      { "id": "HAMMER", "level": 2 },
+      { "id": "SAW_M", "level": 2 },
+      { "id": "SAW_W", "level": 2 }
+    ],
+    "components": [
+      [ [ "2x4", 20 ], [ "frame_wood", 4 ], [ "wood_panel", 4 ] ],
+      [ [ "sheet_metal_small", 10 ] ],
+      [ [ "nail", 20 ] ],
+      [ [ "pipe", 5 ] ],
+      [ [ "chain", 1 ] ]
+    ]
+  },
+  {
+    "result": "v_rockwheel_item",
+    "type": "recipe",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_VEHICLE",
+    "skill_used": "fabrication",
+    "skills_required": [ "mechanics", 3 ],
+    "difficulty": 6,
+    "autolearn": true,
+    "book_learn": [ [ "textbook_fabrication", 4 ], [ "welding_book", 4 ], [ "textbook_mechanics", 2 ], [ "manual_mechanics", 2 ] ],
+    "time": "8 h",
+    "using": [ [ "welding_standard", 25 ], [ "steel_standard", 20 ] ],
+    "qualities": [ { "id": "HAMMER", "level": 2 }, { "id": "SAW_M", "level": 1 }, { "id": "WRENCH", "level": 1 } ],
+    "components": [ [ [ "frame", 2 ] ] ]
   }
 ]

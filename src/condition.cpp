@@ -39,24 +39,27 @@
 #include "string_id.h"
 #include "type_id.h"
 #include "vehicle.h"
+#include "vehicle_part.h"
 #include "vpart_position.h"
 
 class basecamp;
 class recipe;
 
 static const efftype_id effect_currently_busy( "currently_busy" );
-
+static const trait_flag_str_id flag_MUTATION_THRESHOLD( "MUTATION_THRESHOLD" );
 // throws an error on failure, so no need to return
 std::string get_talk_varname( const JsonObject &jo, const std::string &member, bool check_value )
 {
-    if( !jo.has_string( "type" ) || !jo.has_string( "context" ) ||
-        ( check_value && !jo.has_string( "value" ) ) ) {
+    if( check_value && !jo.has_string( "value" ) ) {
         jo.throw_error( "invalid " + member + " condition in " + jo.str() );
     }
     const std::string &var_basename = jo.get_string( member );
-    const std::string &type_var = jo.get_string( "type" );
-    const std::string &var_context = jo.get_string( "context" );
-    return "npctalk_var_" + type_var + "_" + var_context + "_" + var_basename;
+    const std::string &type_var = jo.get_string( "type", "" );
+    const std::string &var_context = jo.get_string( "context", "" );
+    return "npctalk_var" +
+           ( type_var.empty() ? "" : "_" + type_var ) +
+           ( var_context.empty() ? "" : "_" + var_context ) +
+           ( "_" + var_basename );
 }
 
 template<class T>
@@ -125,13 +128,18 @@ template<class T>
 void conditional_t<T>::set_has_trait_flag( const JsonObject &jo, const std::string &member,
         bool is_npc )
 {
-    const std::string &trait_flag_to_check = jo.get_string( member );
-    condition = [trait_flag_to_check, is_npc]( const T & d ) {
+    const std::string &raw = jo.get_string( member );
+    const trait_flag_str_id trait_flag_to_check( raw );
+    if( !trait_flag_to_check.is_valid() ) {
+        jo.show_warning( string_format( "Invalid trait flag %s", raw ), member );
+    }
+    const bool check_threshold = trait_flag_to_check == flag_MUTATION_THRESHOLD;
+    condition = [trait_flag_to_check, check_threshold, is_npc]( const T & d ) {
         player *actor = d.alpha;
         if( is_npc ) {
             actor = dynamic_cast<player *>( d.beta );
         }
-        if( trait_flag_to_check == "MUTATION_THRESHOLD" ) {
+        if( check_threshold ) {
             return actor->crossed_threshold();
         }
         return actor->has_trait_flag( trait_flag_to_check );
@@ -146,7 +154,7 @@ void conditional_t<T>::set_has_activity( bool is_npc )
         if( is_npc ) {
             return d.beta->has_activity();
         } else {
-            if( !actor->activity.is_null() ) {
+            if( !actor->activity->is_null() ) {
                 return true;
             }
         }
@@ -760,7 +768,7 @@ void conditional_t<T>::set_can_stow_weapon( bool is_npc )
         if( is_npc ) {
             actor = dynamic_cast<player *>( d.beta );
         }
-        return !actor->unarmed_attack() && actor->can_pick_volume( actor->weapon );
+        return !actor->unarmed_attack() && actor->can_pick_volume( actor->primary_weapon() );
     };
 }
 

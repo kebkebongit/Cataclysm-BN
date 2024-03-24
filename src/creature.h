@@ -19,6 +19,7 @@
 #include "units.h"
 #include "cached_options.h"
 #include "enums.h"
+#include "memory_fast.h"
 
 enum game_message_type : int;
 class nc_color;
@@ -53,20 +54,6 @@ struct pathfinding_settings;
 struct trap;
 
 template<typename T> struct enum_traits;
-
-enum m_size : int {
-    MS_TINY = 0,    // Squirrel
-    MS_SMALL,      // Dog
-    MS_MEDIUM,    // Human
-    MS_LARGE,    // Cow
-    MS_HUGE,    // TAAAANK
-    num_m_size // last
-};
-
-template<>
-struct enum_traits<m_size> {
-    static constexpr m_size last = m_size::num_m_size;
-};
 
 enum FacingDirection {
     FD_NONE = 0,
@@ -157,20 +144,6 @@ class Creature
         virtual float stability_roll() const = 0;
 
         /**
-         * Simplified attitude towards any creature:
-         * hostile - hate, want to kill, etc.
-         * neutral - anything between.
-         * friendly - avoid harming it, maybe even help.
-         * any - any of the above, used in safemode_ui
-         */
-        enum Attitude : int {
-            A_HOSTILE,
-            A_NEUTRAL,
-            A_FRIENDLY,
-            A_ANY
-        };
-
-        /**
          * Simplified attitude string for unlocalized needs.
          */
         static std::string attitude_raw_string( Attitude att );
@@ -238,6 +211,10 @@ class Creature
         // handles blocking of damage instance. mutates &dam
         virtual bool block_hit( Creature *source, bodypart_id &bp_hit,
                                 damage_instance &dam ) = 0;
+
+        // handles interaction of shields and ranged attacks. mutates &dam
+        virtual bool block_ranged_hit( Creature *source, bodypart_id &bp_hit,
+                                       damage_instance &dam ) = 0;
 
         // handles armor absorption (including clothing damage etc)
         // of damage instance. mutates &dam
@@ -352,6 +329,8 @@ class Creature
 
         virtual void setpos( const tripoint &pos ) = 0;
 
+        bool is_loaded() const;
+
         /** Processes move stopping effects. Returns false if movement is stopped. */
         virtual bool move_effects( bool attacking ) = 0;
 
@@ -385,7 +364,7 @@ class Creature
         bool has_effect( const efftype_id &eff_id, body_part bp = num_bp ) const;
         bool has_effect( const efftype_id &eff_id, const bodypart_str_id &bp ) const;
         /** Check if creature has any effect with the given flag. */
-        bool has_effect_with_flag( const std::string &flag, body_part bp = num_bp ) const;
+        bool has_effect_with_flag( const flag_id &flag, body_part bp = num_bp ) const;
         /** Return the effect that matches the given arguments exactly. */
         const effect &get_effect( const efftype_id &eff_id, body_part bp = num_bp ) const;
         effect &get_effect( const efftype_id &eff_id, body_part bp = num_bp );
@@ -508,25 +487,26 @@ class Creature
          */
         std::vector<bodypart_id> get_all_body_parts( bool only_main = false ) const;
 
+        std::map<bodypart_str_id, bodypart> &get_body();
         const std::map<bodypart_str_id, bodypart> &get_body() const;
         void set_body();
-        bodypart *get_part( const bodypart_id &id );
-        bodypart get_part( const bodypart_id &id ) const;
+        bodypart &get_part( const bodypart_id &id );
+        const bodypart &get_part( const bodypart_id &id ) const;
 
         int get_part_hp_cur( const bodypart_id &id ) const;
         int get_part_hp_max( const bodypart_id &id ) const;
 
         int get_part_healed_total( const bodypart_id &id ) const;
 
-        void set_part_hp_cur( const bodypart_id &id, int set );
-        void set_part_hp_max( const bodypart_id &id, int set );
+        virtual void set_part_hp_cur( const bodypart_id &id, int set );
+        virtual void set_part_hp_max( const bodypart_id &id, int set );
         void set_part_healed_total( const bodypart_id &id, int set );
-        void mod_part_hp_cur( const bodypart_id &id, int mod );
-        void mod_part_hp_max( const bodypart_id &id, int mod );
+        virtual void mod_part_hp_cur( const bodypart_id &id, int mod );
+        virtual void mod_part_hp_max( const bodypart_id &id, int mod );
         void mod_part_healed_total( const bodypart_id &id, int mod );
 
 
-        void set_all_parts_hp_cur( int set );
+        virtual void set_all_parts_hp_cur( int set );
         void set_all_parts_hp_to_max();
 
         virtual int get_speed_base() const;
@@ -805,8 +785,8 @@ class Creature
         effects_map get_all_effects() const;
 
     protected:
-        Creature *killer = nullptr; // whoever killed us. this should be NULL unless we are dead
-        void set_killer( Creature *killer );
+        weak_ptr_fast<Creature> killer; // whoever killed us. this should be NULL unless we are dead
+        void set_killer( Creature *nkiller );
 
         /**
          * Processes one effect on the Creature.
@@ -838,9 +818,9 @@ class Creature
 
         bool fake = false;
         Creature();
-        Creature( const Creature & ) = default;
+        Creature( const Creature & );
         Creature( Creature && ) = default;
-        Creature &operator=( const Creature & ) = default;
+        Creature &operator=( const Creature & ) = delete;
         Creature &operator=( Creature && ) = default;
 
     protected:

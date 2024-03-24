@@ -39,21 +39,21 @@
     "name": "PLAYER_HUNGER_RATE",
     "info": "Set base hunger rate per 5 minutes. Default: 1.0",
     "stype": "float",
-    "value": 1.0
+    "value": 1
   },
   {
     "type": "EXTERNAL_OPTION",
     "name": "PLAYER_THIRST_RATE",
     "info": "Set base thirst rate per 5 minutes. Default: 1.0",
     "stype": "float",
-    "value": 1.0
+    "value": 1
   },
   {
     "type": "EXTERNAL_OPTION",
     "name": "PLAYER_FATIGUE_RATE",
     "info": "Set base fatigue rate per 5 minutes. Default: 1.0",
     "stype": "float",
-    "value": 1.0
+    "value": 1
   },
   {
     "type": "EXTERNAL_OPTION",
@@ -124,13 +124,6 @@
     "info": "Enables CBM slots mechanics. If true CBM slots are enabled.",
     "stype": "bool",
     "value": false
-  },
-  {
-    "type": "EXTERNAL_OPTION",
-    "name": "SPAWN_ANIMAL_DENSITY",
-    "info": "A scaling factor that determines density of wild, formerly domesticated and mutated animal spawns.",
-    "stype": "float",
-    "value": 1.0
   },
   {
     "type": "EXTERNAL_OPTION",

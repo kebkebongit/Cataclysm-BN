@@ -65,6 +65,7 @@
       [ "pocket_firstaid", 2 ],
       [ "pocket_survival", 2 ],
       [ "pocket_firearms", 2 ],
+      [ "manual_luty", 1 ],
       [ "mag_archery", 15 ],
       [ "manual_archery", 8 ],
       [ "book_archery", 2 ]
@@ -269,7 +270,11 @@
     "type": "item_group",
     "id": "cave_minerals",
     "subtype": "distribution",
-    "entries": [ { "item": "material_niter", "prob": 20 }, { "item": "material_limestone", "prob": 5 } ]
+    "entries": [
+      { "item": "material_niter", "prob": 20 },
+      { "item": "iron_ore", "prob": 10 },
+      { "item": "material_limestone", "prob": 5 }
+    ]
   },
   {
     "id": "prison_textile",
@@ -479,7 +484,18 @@
       [ "wire", 40 ],
       { "item": "sheet_metal", "prob": 5 },
       { "item": "sheet_metal_small", "prob": 5, "count": [ 2, 4 ] },
-      { "item": "material_aluminium_ingot", "prob": 10, "count": [ 1, 5 ] }
+      { "item": "material_aluminium_ingot", "prob": 10, "count": [ 1, 10 ] }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "steel_mill_storage",
+    "subtype": "distribution",
+    "//": "storage locked behind industrial card reader",
+    "entries": [
+      { "item": "hard_plate", "prob": 50, "count": [ 1, 3 ] },
+      { "item": "alloy_plate", "prob": 25, "count": [ 1, 3 ] },
+      { "item": "alloy_sheet", "prob": 25, "count": [ 1, 10 ] }
     ]
   },
   {
@@ -703,7 +719,7 @@
       [ "can_drink", 130 ],
       [ "can_drink_unsealed", 130 ],
       [ "keg", 15 ],
-      [ "material_aluminium_ingot", 25 ],
+      { "item": "material_aluminium_ingot", "prob": 25, "count": [ 2, 3 ] },
       [ "xlframe", 10 ],
       [ "survival_kit_box", 1 ],
       [ "wearable_light", 5 ],
@@ -834,6 +850,7 @@
       [ "can_food_unsealed", 10 ],
       [ "lighter", 60 ],
       [ "ref_lighter", 1 ],
+      [ "electric_lighter", 1 ],
       [ "matches", 60 ],
       [ "flashlight", 40 ],
       [ "laptop", 20 ],
@@ -1031,23 +1048,34 @@
       [ "dao", 3 ],
       [ "sword_xiphos", 4 ],
       [ "khopesh", 4 ],
-      [ "spear_dory", 3 ]
+      [ "ax_bronze", 2 ],
+      [ "spear_dory", 3 ],
+      [ "dagger_bronze", 5 ]
     ]
   },
   {
     "type": "item_group",
     "id": "museum_guns",
     "items": [
-      [ "pistol_flintlock", 60 ],
-      [ "carbine_flintlock", 40 ],
-      [ "rifle_flintlock", 60 ],
+      [ "pistol_flintlock", 40 ],
+      [ "carbine_flintlock", 30 ],
+      [ "rifle_flintlock", 40 ],
+      [ "longrifle_flintlock", 50 ],
       [ "flintlock_pouch", 30 ],
       [ "flintlock_ammo", 60 ],
       [ "flintlock_shot", 40 ],
+      [ "shotgun_paper", 50 ],
       [ "colt_army", 50 ],
       [ "colt_navy", 50 ],
+      [ "shot_paper_00", 25 ],
+      [ "shot_paper_bird", 15 ],
+      [ "shot_paper_slug", 10 ],
       [ "36navy", 50 ],
-      [ "44army", 50 ]
+      [ "44army", 50 ],
+      [ "gatlingdrum240", 10 ],
+      [ "4570_low", 10 ],
+      [ "cannonball_explosive", 5 ],
+      [ "cannonball_4lb", 20 ]
     ]
   },
   {
@@ -1100,6 +1128,7 @@
       [ "mag_porn", 20 ],
       [ "lighter", 60 ],
       [ "ref_lighter", 2 ],
+      [ "electric_lighter", 2 ],
       [ "matches", 60 ],
       [ "sewage", 60 ],
       [ "improvised_pipebomb", 4 ],
@@ -1157,7 +1186,7 @@
       [ "grapnel", 1 ],
       [ "toolbox", 5 ],
       [ "apron_leather", 10 ],
-      [ "bio_meteorologist", 10 ],
+      [ "bio_infolink", 10 ],
       [ "chem_aluminium_sulphate", 20 ]
     ]
   },
@@ -1172,6 +1201,7 @@
       [ "toolbox", 5 ],
       [ "coal_lump", 20 ],
       [ "material_shrd_limestone", 40 ],
+      [ "iron_ore", 10 ],
       [ "material_niter", 5 ],
       [ "chem_rdx", 5 ],
       [ "chem_hmtd", 10 ],
@@ -1187,6 +1217,7 @@
       { "item": "rock", "prob": 40, "count": [ 1, 10 ] },
       { "item": "material_shrd_limestone", "prob": 40, "count": [ 1, 10 ] },
       { "item": "material_limestone", "prob": 40, "count": [ 1, 10 ] },
+      { "item": "iron_ore", "prob": 20, "count": [ 1, 10 ] },
       { "item": "material_niter", "prob": 5, "count": [ 1, 10 ] },
       { "item": "material_sand", "prob": 50, "charges": 500, "container-item": "bag_canvas" },
       { "item": "material_soil", "prob": 50, "charges": 500, "container-item": "bag_canvas" },
@@ -1328,12 +1359,16 @@
       [ "wheel_bicycle_or", 5 ],
       [ "wheel_motorbike_or", 5 ],
       [ "wheel_slick", 5 ],
-      [ "1cyl_combustion", 10 ],
-      [ "v2_combustion", 10 ],
-      [ "i4_combustion", 10 ],
-      [ "v6_combustion", 10 ],
-      [ "v6_diesel", 10 ],
-      [ "v8_combustion", 10 ],
+      [ "1cyl_combustion", 5 ],
+      [ "v2_combustion", 5 ],
+      [ "i4_combustion", 5 ],
+      [ "v6_combustion", 5 ],
+      [ "v6_diesel", 5 ],
+      [ "v8_combustion", 5 ],
+      [ "engine_block_tiny", 10 ],
+      [ "engine_block_small", 5 ],
+      [ "engine_block_medium", 10 ],
+      [ "engine_block_large", 5 ],
       [ "steam_triple_small", 1 ],
       [ "steam_triple_medium", 1 ],
       [ "steam_watts_small", 1 ],
@@ -1385,6 +1420,7 @@
       [ "gloves_tactical", 10 ],
       [ "armguard_hard", 20 ],
       [ "legguard_hard", 20 ],
+      [ "shield_riot", 20 ],
       [ "emergency_book", 1 ]
     ]
   },
@@ -1534,6 +1570,7 @@
       { "item": "child_book", "prob": 60 },
       { "item": "lighter", "prob": 60 },
       { "item": "ref_lighter", "prob": 4 },
+      { "item": "electric_lighter", "prob": 4 },
       { "item": "matches", "prob": 60 },
       { "item": "coat_rain", "prob": 50 },
       { "item": "hood_rain", "prob": 30 },
@@ -1602,7 +1639,7 @@
       [ "misc_repairkit", 5 ],
       [ "toolbox", 2 ],
       [ "apron_leather", 10 ],
-      [ "bio_meteorologist", 3 ],
+      [ "bio_infolink", 3 ],
       [ "thermometer", 3 ],
       [ "hygrometer", 3 ],
       [ "barometer", 3 ],
@@ -1834,13 +1871,9 @@
       { "item": "microscope", "prob": 5 },
       { "item": "microscope_dissecting", "prob": 5 },
       { "item": "funnel_separation", "prob": 3 },
-      { "item": "burette", "prob": 3 },
       { "item": "still_lab", "prob": 3 },
       { "item": "beaker", "prob": 5 },
       { "item": "gradcylinder", "prob": 5 },
-      { "item": "rack_test_tube", "prob": 5 },
-      { "item": "stand_ring", "prob": 5 },
-      { "item": "stand_ring_clamps", "prob": 5 },
       { "item": "ether", "prob": 5 },
       { "item": "iodine", "prob": 5 },
       { "item": "prussian_blue", "prob": 5 },
@@ -2186,7 +2219,8 @@
       [ "thermal_mask", 2 ],
       [ "thermal_outfit", 1 ],
       [ "gloves_winter", 40 ],
-      [ "gloves_liner", 25 ],
+      [ "gloves_liner", 20 ],
+      [ "gloves_liner_wool", 5 ],
       [ "gloves_tactical", 5 ],
       [ "glasses_bal", 5 ],
       [ "hat_knit", 25 ],
@@ -2318,7 +2352,16 @@
       { "item": "boots_combat", "prob": 50 },
       { "item": "helmet_army", "prob": 10 },
       { "item": "gloves_tactical", "prob": 10 },
-      { "item": "modularvestceramic", "prob": 10 },
+      {
+        "distribution": [
+          { "item": "modularvestceramic", "prob": 50 },
+          { "item": "modularvest", "prob": 25 },
+          { "item": "modularveststeel", "prob": 10 },
+          { "item": "modularvesthard", "prob": 10 },
+          { "item": "modularvestsuper", "prob": 5 }
+        ],
+        "prob": 10
+      },
       { "group": "clothing_tactical_leg", "prob": 5 },
       {
         "distribution": [
@@ -2480,5 +2523,209 @@
       [ "coal_lump", 5 ],
       [ "material_limestone", 5 ]
     ]
+  },
+  {
+    "id": "fort_giftshop",
+    "type": "item_group",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "tshirt", "prob": 40 },
+      { "item": "ceramic_mug", "prob": 10 },
+      { "item": "teapot", "prob": 14 },
+      { "group": "tinware", "prob": 10 },
+      { "item": "tricorne", "prob": 25 },
+      { "item": "survnote", "prob": 1 }
+    ]
+  },
+  {
+    "id": "fort_giftshop_rare",
+    "type": "item_group",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "pocketwatch", "prob": 20 },
+      { "group": "jewelry_accessories", "prob": 30 },
+      { "item": "cavalry_sabre_fake", "container-item": "scabbard", "prob": 20 },
+      { "item": "knife_hunting", "container-item": "sheath", "prob": 5 },
+      { "item": "flintlock_pouch", "prob": 20 },
+      { "item": "bandolier_pistol", "prob": 3 },
+      { "item": "spiral_stone", "prob": 2 }
+    ]
+  },
+  {
+    "id": "fort_display_case",
+    "type": "item_group",
+    "subtype": "distribution",
+    "//": "Firearms are weighted 50% Civil War items, 30% Revolutionary War items, and 20% post-Civil War items.",
+    "entries": [
+      { "item": "tricorne", "prob": 10 },
+      { "item": "knee_high_boots", "prob": 3 },
+      { "item": "breeches", "prob": 2 },
+      { "item": "waistcoat", "prob": 3 },
+      { "item": "peacoat", "prob": 2 },
+      { "item": "greatcoat", "prob": 3 },
+      { "item": "hat_fur", "prob": 2 },
+      { "item": "cavalry_sabre", "prob": 10 },
+      { "item": "hatchet", "prob": 5 },
+      { "item": "cannonball_explosive", "prob": 10 },
+      { "item": "shotgun_paper", "prob": 10 },
+      { "item": "lemat_revolver", "prob": 5 },
+      { "item": "colt_army", "prob": 5 },
+      { "item": "colt_navy", "prob": 5 },
+      { "item": "longrifle_flintlock", "prob": 7 },
+      { "item": "rifle_flintlock", "prob": 3 },
+      { "item": "carbine_flintlock", "prob": 2 },
+      { "item": "pistol_flintlock", "prob": 3 },
+      { "item": "sharps", "prob": 8 },
+      { "item": "colt_saa", "prob": 2 }
+    ]
+  },
+  {
+    "id": "fort_historic_wardrobe",
+    "type": "item_group",
+    "subtype": "collection",
+    "entries": [
+      {
+        "distribution": [
+          { "item": "knee_high_boots", "prob": 80, "damage": [ 1, 4 ] },
+          { "item": "boots_fur", "prob": 20, "damage": [ 1, 4 ] }
+        ],
+        "prob": 20
+      },
+      {
+        "distribution": [ { "item": "breeches", "prob": 80, "damage": [ 1, 4 ] }, { "item": "pants_fur", "prob": 20, "damage": [ 1, 4 ] } ],
+        "prob": 50
+      },
+      { "item": "waistcoat", "prob": 30, "damage": [ 1, 4 ] },
+      {
+        "distribution": [ { "item": "peacoat", "prob": 80, "damage": [ 1, 4 ] }, { "item": "greatcoat", "prob": 20, "damage": [ 1, 4 ] } ],
+        "prob": 50
+      },
+      { "item": "leather_belt", "prob": 10, "damage": [ 1, 4 ] },
+      { "item": "knit_scarf", "prob": 10, "damage": [ 1, 4 ] },
+      {
+        "distribution": [ { "item": "tricorne", "prob": 80, "damage": [ 1, 4 ] }, { "item": "hat_fur", "prob": 20, "damage": [ 1, 4 ] } ],
+        "prob": 30
+      },
+      { "item": "gloves_leather", "prob": 10, "damage": [ 1, 4 ] },
+      {
+        "distribution": [
+          { "item": "stockings", "prob": 50, "damage": [ 1, 4 ] },
+          { "item": "stockings_wool", "prob": 50, "damage": [ 1, 4 ] }
+        ],
+        "prob": 30
+      }
+    ]
+  },
+  {
+    "id": "fort_crate",
+    "type": "item_group",
+    "subtype": "collection",
+    "entries": [
+      { "item": "cannonball_4lb", "prob": 100, "count": [ 1, 10 ] },
+      { "item": "rag", "prob": 50, "count": [ 1, 25 ] },
+      { "item": "gatlingdrum240", "prob": 25 }
+    ]
+  },
+  {
+    "id": "fort_powderbarrel",
+    "type": "item_group",
+    "subtype": "collection",
+    "entries": [
+      { "item": "chem_black_powder", "charges": [ 100, 2500 ], "container-item": "wooden_barrel_small" },
+      { "item": "chem_black_powder", "charges": [ 100, 2500 ], "container-item": "wooden_barrel_small", "prob": 50 },
+      { "item": "4570_low", "charges": [ 1, 240 ], "prob": 50 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "oa_ig_sb_food",
+    "items": [
+      { "item": "veggy_pickled", "prob": 30, "charges": 2, "container-item": "jar_glass_sealed" },
+      { "item": "fish_pickled", "prob": 26, "charges": 2, "container-item": "jar_glass_sealed" },
+      { "item": "meat_pickled", "prob": 20, "charges": 2, "container-item": "jar_glass_sealed" },
+      [ "dry_meat", 20 ],
+      [ "dry_veggy", 20 ],
+      [ "carrot", 20 ],
+      [ "water_clean", 80 ],
+      [ "water_mineral", 5 ],
+      [ "cola", 70 ],
+      [ "creamsoda", 60 ],
+      [ "lemonlime", 60 ],
+      [ "orangesoda", 60 ],
+      [ "crispycran", 40 ],
+      [ "colamdew", 60 ],
+      [ "choc_drink", 30 ],
+      [ "jerky", 55 ],
+      [ "salted_fish", 35 ],
+      [ "porkstick", 55 ],
+      [ "cheese_hard", 15 ],
+      [ "can_beans", 40 ],
+      [ "can_corn", 35 ],
+      [ "can_spam", 30 ],
+      [ "salt", 10 ],
+      [ "seasoning_salt", 5 ],
+      [ "jar_sauerkraut_pickled", 20 ],
+      [ "lutefisk", 20 ],
+      [ "pemmican", 20 ]
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "oa_ig_sb_equipment",
+    "items": [
+      [ "flask_hip", 20 ],
+      [ "shortbow", 20 ],
+      [ "arrow_wood_heavy", 20 ],
+      [ "arrow_fire_hardened_fletched", 20 ],
+      [ "quiver_birchbark", 30 ],
+      [ "fire_drill", 30 ],
+      [ "lighter", 30 ],
+      [ "matches", 30 ],
+      [ "sunglasses", 30 ],
+      [ "fitover_sunglasses", 20 ],
+      [ "ax", 10 ],
+      [ "saw", 10 ],
+      [ "backpack", 30 ],
+      [ "backpack_leather", 30 ],
+      [ "quiver", 20 ],
+      [ "canteen", 20 ],
+      [ "knife_hunting", 30 ],
+      [ "shovel", 30 ],
+      { "group": "ammo_pocket_batteries_full", "prob": 30 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "oa_ig_sb_rare",
+    "items": [
+      { "item": "gasoline", "prob": 5, "charges-min": 450, "charges-max": 2000, "container-item": "jug_plastic" },
+      { "item": "gasoline", "prob": 5, "charges-min": 450, "charges-max": 4000, "container-item": "jerrycan" },
+      { "item": "gasoline", "prob": 5, "charges-min": 450, "charges-max": 10000, "container-item": "jerrycan_big" },
+      [ "gasoline_lantern", 15 ],
+      [ "electric_lantern", 15 ],
+      [ "oil_lamp", 15 ],
+      [ "lamp_oil", 15 ],
+      [ "compbow", 20 ],
+      [ "binoculars", 20 ],
+      [ "ref_lighter", 30 ],
+      [ "e_tool", 30 ],
+      [ "jackhammer", 5 ],
+      [ "elec_jackhammer", 5 ]
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "oa_ig_sb_books",
+    "items": [ [ "book_archery", 20 ] ]
+  },
+  {
+    "type": "item_group",
+    "id": "oa_ig_sb_wood",
+    "items": [ [ "2x4", 20 ], [ "stick", 20 ], [ "pointy_stick", 10 ], [ "log", 20 ] ]
+  },
+  {
+    "type": "item_group",
+    "id": "oa_ig_sb_water",
+    "items": [ { "item": "water", "prob": 30, "charges-min": 0, "charges-max": 200, "container-item": "keg" } ]
   }
 ]
